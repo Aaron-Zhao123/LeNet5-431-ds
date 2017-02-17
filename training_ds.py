@@ -141,7 +141,7 @@ def calculate_non_zero_weights(weight):
 Prune weights, weights that has absolute value lower than the
 threshold is set to 0
 '''
-def dynamic_surgery(weight, prune_th):
+def dynamic_surgery(weight, pruning_th):
     threshold = np.percentile(np.abs(weight),pruning_th)
     soft_threshold = np.percentile(np.abs(weight),0.8*pruning_th)
     weight_mask = np.abs(weight) > threshold
