@@ -31,7 +31,7 @@ while (count < 10):
     pfc = pfc + 10
     pfc2 = pfc2 + 10
     pcov = pcov + 10
-    pcov = pcov2 + 10
+    pcov2 = pcov2 + 10
     param = [
     ('-pcov',pcov),
     ('-pcov2',pcov2),
