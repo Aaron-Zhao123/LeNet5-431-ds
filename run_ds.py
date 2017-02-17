@@ -1,5 +1,5 @@
 import os
-import training_v6
+import training_ds
 # os.system('python training_v3.py -p0')
 # os.system('python training_v3.py -p1')
 # os.system('python training_v3.py -p2')
@@ -10,10 +10,10 @@ import training_v6
 
 acc_list = []
 count = 0
-pcov = 92
-pfc = 92
-pcov2 = 92
-pfc2 = 92
+pcov = 0
+pfc = 0
+pcov2 = 0
+pfc2 = 0
 # model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
 # pfc = pfc+1
 # param = [
@@ -28,7 +28,10 @@ pfc2 = 92
 # acc = training_v6.main(param)
 model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
 while (count < 10):
-    pfc = pfc+1
+    pfc = pfc + 10
+    pfc2 = pfc2 + 10
+    pcov = pcov + 10
+    pcov = pcov2 + 10
     param = [
     ('-pcov',pcov),
     ('-pcov2',pcov2),
@@ -36,13 +39,40 @@ while (count < 10):
     ('-pfc2',pfc2),
     ('-m',model_tag)
     ]
-    acc = training_v6.main(param)
+    acc = training_ds.main(param)
     model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
     acc_list.append(acc)
     count = count + 1
-    if (acc < 0.985):
+    if (acc < 0.99):
         break
-
-print (acc)
-
-print('accuracy summary: {}'.format(acc_list))
+#
+# param = [
+# ('-pcov',pcov),
+# ('-pcov2',pcov2),
+# ('-pfc',pfc),
+# ('-pfc2',pfc2),
+# ('-m',model_tag)
+# ]
+# acc = training_ds.main(param)
+#
+# while (count < 10):
+#     pfc = pfc + 1
+#     pfc2 = pfc2 + 1
+#     pcov = pcov + 1
+#     pcov = pcov2 + 1
+#     param = [
+#     ('-pcov',pcov),
+#     ('-pcov2',pcov2),
+#     ('-pfc',pfc),
+#     ('-pfc2',pfc2),
+#     ('-m',model_tag)
+#     ]
+#     acc = training_v6.main(param)
+#     model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
+#     acc_list.append(acc)
+#     count = count + 1
+#     if (acc < 0.99):
+#         break
+# print (acc)
+#
+# print('accuracy summary: {}'.format(acc_list))
