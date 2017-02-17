@@ -49,7 +49,7 @@ ENABLE_PRUNING = 0
 # def initialize_tf_variables(first_time_training):
 #     if (first_time_training):
 def initialize_variables(model_number):
-    with open('weights_log_asyn/'+ model_number +'.pkl','rb') as f:
+    with open('weights_log/'+ model_number +'.pkl','rb') as f:
         wc1, wc2, wd1, out, bc1, bc2, bd1, bout = pickle.load(f)
     weights = {
         # 5x5 conv, 1 input, 32 outputs
