@@ -43,12 +43,23 @@ def mask_gen():
     keys = ['cov1', 'cov2', 'fc1', 'fc2']
     masks = {}
     b_masks = {}
+    soft_weights_mask = {
+        'cov1': np.zeros([5, 5, NUM_CHANNELS, 20]),
+        'cov2': np.zeros([5, 5, 20, 50]),
+        'fc1': np.zeros([4 * 4 * 50, 500]),
+        'fc2': np.zeros([500, NUM_LABELS])
+    }
+    soft_biases_mask = {
+        'cov1': np.zeros([20]),
+        'cov2': np.zeros([50]),
+        'fc1': np.zeros([500]),
+        'fc2': np.zeros([10])
+    }
     for key in keys:
         masks[key] = weights[key] != 0
         b_masks[key] = biases[key] != 0
-    with open('mask.pkl', 'wb') as f:
-        pickle.dump((masks, b_masks),f)
-
+    with open('mask_log/pcov00pcov00pfc00pfc00mask.pkl', 'wb') as f:
+        pickle.dump((masks, b_masks, soft_weights_mask, soft_biases_mask),f)
 
 
 

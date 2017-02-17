@@ -179,7 +179,8 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
             biase = biases[key].eval()
             weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov)
             biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_cov)
-    with open('mask.pkl', 'wb') as f:
+    mask_file_name = 'masks_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(pruning_fc)+ 'pfc'+ str(pruning_fc2)+ 'mask'+'.pkl'
+    with open(mask_file_name, 'wb') as f:
         pickle.dump((weight_mask, biases_mask, soft_weight_mask, soft_biase_mask), f)
 
 # def quantize_a_value(val):
@@ -293,9 +294,10 @@ def main(argv = None):
         pruning_cov2 = int(pruning_cov2)
         pruning_fc = int(pruning_fc)
         pruning_fc2 = int(pruning_fc2)
+        mask_file = 'masks_log/'+model_number+'mask'+'.pkl'
 
         if (TRAIN == True):
-            with open('mask.pkl','rb') as f:
+            with open(mask_file,'rb') as f:
                 (weights_mask,biases_mask,soft_weight_mask, soft_biase_mask) = pickle.load(f)
         else:
             weights_mask = {
@@ -413,7 +415,7 @@ def main(argv = None):
                                     keep_prob: 1.})
                             print('test accuracy is {}'.format(test_accuracy))
                             if (test_accuracy > 0.990 or epoch > 80):
-                                file_name = 'weights_log_asyn/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(pruning_fc)+ 'pfc'+ str(pruning_fc2)+'.pkl'
+                                file_name = 'weights_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(pruning_fc)+ 'pfc'+ str(pruning_fc2)+'.pkl'
                                 with open(file_name, 'wb') as f:
                                     pickle.dump((
                                         weights['cov1'].eval(),
