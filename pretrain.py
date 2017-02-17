@@ -44,10 +44,10 @@ def mask_gen():
     masks = {}
     b_masks = {}
     soft_weights_mask = {
-        'cov1': np.zeros([5, 5, NUM_CHANNELS, 20]),
+        'cov1': np.zeros([5, 5, 3, 20]),
         'cov2': np.zeros([5, 5, 20, 50]),
         'fc1': np.zeros([4 * 4 * 50, 500]),
-        'fc2': np.zeros([500, NUM_LABELS])
+        'fc2': np.zeros([500, 10])
     }
     soft_biases_mask = {
         'cov1': np.zeros([20]),
