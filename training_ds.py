@@ -145,7 +145,7 @@ def dynamic_surgery(weight, pruning_th):
     threshold = np.percentile(np.abs(weight),pruning_th)
     soft_threshold = np.percentile(np.abs(weight),0.8*pruning_th)
     weight_mask = np.abs(weight) > threshold
-    soft_weight_mask = (np.abs(weight) > soft_threshold) - weight_mask[key]
+    soft_weight_mask = (np.abs(weight) > soft_threshold) - weight_mask
     return (weight_mask, soft_weight_mask)
 
 def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weight_mask, biases, biases_mask):
