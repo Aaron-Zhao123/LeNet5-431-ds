@@ -299,7 +299,10 @@ def main(argv = None):
         if (TRAIN == True):
             with open(mask_file,'rb') as f:
                 (weights_mask,biases_mask,soft_weight_mask, soft_biase_mask) = pickle.load(f)
+            print(np.shape(weights_mask['cov2']))
             weights_mask, biases_mask = recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask)
+            print(np.shape(weights_mask['cov2']))
+            sys.exit()
         else:
             weights_mask = {
                 'cov1': np.ones([5, 5, NUM_CHANNELS, 20]),
