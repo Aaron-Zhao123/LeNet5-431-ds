@@ -143,7 +143,7 @@ threshold is set to 0
 '''
 def dynamic_surgery(weight, pruning_th):
     threshold = np.percentile(np.abs(weight),pruning_th)
-    soft_threshold = np.percentile(np.abs(weight),0.99*pruning_th)
+    soft_threshold = np.percentile(np.abs(weight),0.9*pruning_th)
     weight_mask = np.abs(weight) > threshold
     soft_weight_mask = (np.abs(weight) > soft_threshold) - weight_mask
     return (weight_mask, soft_weight_mask)
@@ -309,7 +309,6 @@ def main(argv = None):
             with open(mask_file,'rb') as f:
                 (weights_mask,biases_mask,soft_weight_mask, soft_biase_mask) = pickle.load(f)
             weights_mask, biases_mask = recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask)
-            print(weights_mask.keys())
         else:
             weights_mask = {
                 'cov1': np.ones([5, 5, NUM_CHANNELS, 20]),
