@@ -189,6 +189,7 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
             weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc2)
             biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_fc2)
     mask_file_name = 'masks_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(pruning_fc*10)))+ 'pfc'+ str(pruning_fc2)+ 'mask'+'.pkl'
+    print("training done, save a mask file at "  + mask_file_name)
     with open(mask_file_name, 'wb') as f:
         pickle.dump((weight_mask, biases_mask, soft_weight_mask, soft_biase_mask), f)
 
