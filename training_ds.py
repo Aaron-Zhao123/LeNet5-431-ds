@@ -209,6 +209,7 @@ def mask_gradients(weights, grads_and_names, weight_masks, biases, biases_mask):
         # if flag is not set
         if (flag == 0):
             new_grads.append((grad,var_name))
+        # print(grad.get_shape())
     return new_grads
 
 '''
@@ -299,14 +300,8 @@ def main(argv = None):
         if (TRAIN == True):
             with open(mask_file,'rb') as f:
                 (weights_mask,biases_mask,soft_weight_mask, soft_biase_mask) = pickle.load(f)
-            print(np.shape(weights_mask['cov2']))
-            print(np.shape(weights_mask['fc1']))
-            m1 = weights_mask['fc1']
             weights_mask, biases_mask = recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask)
-            print(np.shape(weights_mask['cov2']))
-            print(np.shape(weights_mask['fc1']))
-            print(np.array_equal(m1, weights_mask['fc1']))
-            # sys.exit()
+            print(weights_mask.keys())
         else:
             weights_mask = {
                 'cov1': np.ones([5, 5, NUM_CHANNELS, 20]),

@@ -8,7 +8,7 @@ np.set_printoptions(precision=128)
 # open_file_name = 'weights1'+'.pkl'
 # open_file_name = 'weights_log/pcov95pfc95'+'.pkl'
 # open_file_name = 'weights_log_asyn/pcov93pcov93pfc100pfc93'+'.pkl'
-open_file_name = 'weights_log/pcov00pcov00pfc00pfc00.pkl'
+open_file_name = 'weights_log/pcov0pcov0pfc0pfc0.pkl'
 # open_file_name = 'weights_log/pcov90pfc90'+'.pkl'
 # open_file_name = 'weights_log/weights2.pkl'
 Test = True;
@@ -44,7 +44,7 @@ def mask_gen():
     masks = {}
     b_masks = {}
     soft_weights_mask = {
-        'cov1': np.zeros([5, 5, 3, 20]),
+        'cov1': np.zeros([5, 5, 1, 20]),
         'cov2': np.zeros([5, 5, 20, 50]),
         'fc1': np.zeros([4 * 4 * 50, 500]),
         'fc2': np.zeros([500, 10])
