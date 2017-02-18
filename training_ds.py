@@ -245,8 +245,8 @@ def ClipIfNotNone(grad):
 def recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask):
     keys = ['cov1','cov2','fc1','fc2']
     for key in keys:
-        weights_mask[key] = weights_mask[key] + (np.random.rand(*soft_weight_mask[key].shape) > 0.5)
-        biases_mask[key] = biases_mask[key] + (np.random.rand(*soft_biase_mask[key].shape) > 0.5)
+        weights_mask[key] = weights_mask[key] + (soft_weight_mask[key] * np.random.rand(*soft_weight_mask[key].shape) > 0.5)
+        biases_mask[key] = biases_mask[key] + (soft_biase_mask[key] * np.random.rand(*soft_biase_mask[key].shape) > 0.5)
     return (weights_mask, biases_mask)
 '''
 Define a training strategy
