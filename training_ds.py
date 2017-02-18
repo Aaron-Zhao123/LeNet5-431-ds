@@ -300,8 +300,10 @@ def main(argv = None):
             with open(mask_file,'rb') as f:
                 (weights_mask,biases_mask,soft_weight_mask, soft_biase_mask) = pickle.load(f)
             print(np.shape(weights_mask['cov2']))
+            print(np.shape(weights_mask['fc1']))
             weights_mask, biases_mask = recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask)
             print(np.shape(weights_mask['cov2']))
+            print(np.shape(weights_mask['fc1']))
             sys.exit()
         else:
             weights_mask = {
