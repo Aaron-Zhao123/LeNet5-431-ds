@@ -143,7 +143,7 @@ threshold is set to 0
 '''
 def dynamic_surgery(weight, pruning_th):
     threshold = np.percentile(np.abs(weight),pruning_th)
-    soft_threshold = np.percentile(np.abs(weight),0.8*pruning_th)
+    soft_threshold = np.percentile(np.abs(weight),pruning_th)
     weight_mask = np.abs(weight) > threshold
     soft_weight_mask = (np.abs(weight) > soft_threshold) - weight_mask
     return (weight_mask, soft_weight_mask)
