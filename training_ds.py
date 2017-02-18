@@ -143,7 +143,7 @@ threshold is set to 0
 '''
 def dynamic_surgery(weight, pruning_th):
     threshold = np.percentile(np.abs(weight),pruning_th)
-    soft_threshold = np.percentile(np.abs(weight),0.5*pruning_th)
+    soft_threshold = np.percentile(np.abs(weight),0.8*pruning_th)
     weight_mask = np.abs(weight) > threshold
     soft_weight_mask = (np.abs(weight) > soft_threshold) - weight_mask
     return (weight_mask, soft_weight_mask)
@@ -188,7 +188,7 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
             biase = biases[key].eval()
             weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc2)
             biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_fc2)
-    mask_file_name = 'masks_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(pruning_fc)+ 'pfc'+ str(pruning_fc2)+ 'mask'+'.pkl'
+    mask_file_name = 'masks_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(pruning_fc*10)))+ 'pfc'+ str(pruning_fc2)+ 'mask'+'.pkl'
     with open(mask_file_name, 'wb') as f:
         pickle.dump((weight_mask, biases_mask, soft_weight_mask, soft_biase_mask), f)
 
@@ -430,7 +430,7 @@ def main(argv = None):
                                     keep_prob: 1.})
                             print('test accuracy is {}'.format(test_accuracy))
                             if (test_accuracy > 0.990 or epoch > 80):
-                                file_name = 'weights_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(pruning_fc)+ 'pfc'+ str(pruning_fc2)+'.pkl'
+                                file_name = 'weights_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(10*pruning_fc)))+ 'pfc'+ str(pruning_fc2)+'.pkl'
                                 with open(file_name, 'wb') as f:
                                     pickle.dump((
                                         weights['cov1'].eval(),
