@@ -308,7 +308,7 @@ def main(argv = None):
         # obtain all weight masks
         pruning_cov = int(pruning_cov)
         pruning_cov2 = int(pruning_cov2)
-        pruning_fc = int(pruning_fc)
+        pruning_fc = float(pruning_fc)
         pruning_fc2 = int(pruning_fc2)
         mask_file = 'masks_log/'+model_number+'mask'+'.pkl'
 
