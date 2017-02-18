@@ -313,6 +313,7 @@ def main(argv = None):
                 'fc2': np.ones([10])
             }
 
+        weights_mask, biases_mask = recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask)
         mnist = input_data.read_data_sets("MNIST.data/", one_hot = True)
         # tf Graph input
         x = tf.placeholder("float", [None, n_input])
@@ -365,7 +366,6 @@ def main(argv = None):
                 sess.run(weights[key].assign(weights[key].eval()*weights_mask[key]))
                 sess.run(biases[key].assign(biases[key].eval()*biases_mask[key]))
 
-            weights_mask, biases_mask = recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask)
 
             prune_info(weights,1)
             # exit()
