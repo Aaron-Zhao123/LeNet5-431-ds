@@ -27,8 +27,8 @@ pfc2 = 90
 # ]
 # acc = training_v6.main(param)
 model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
-while (count < 2):
-    # pfc = pfc + 10
+while (count < 10):
+    pfc = pfc + 1
     # pfc2 = pfc2 + 10
     # pcov = pcov + 10
     # pcov2 = pcov2 + 10

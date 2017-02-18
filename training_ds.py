@@ -143,7 +143,7 @@ threshold is set to 0
 '''
 def dynamic_surgery(weight, pruning_th):
     threshold = np.percentile(np.abs(weight),pruning_th)
-    soft_threshold = np.percentile(np.abs(weight),pruning_th)
+    soft_threshold = np.percentile(np.abs(weight),0.99*pruning_th)
     weight_mask = np.abs(weight) > threshold
     soft_weight_mask = (np.abs(weight) > soft_threshold) - weight_mask
     return (weight_mask, soft_weight_mask)
@@ -173,6 +173,9 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
             biase = biases[key].eval()
             weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov)
             biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_cov)
+            print("Testing my ds")
+            print(np.array_equal(weight, weight_mask[key]))
+            print("test end")
 
         if (key == "fc2"):
             weight = weights[key].eval()
@@ -250,6 +253,7 @@ def recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask
     for key in keys:
         weights_mask[key] = weights_mask[key] + (soft_weight_mask[key] * np.random.rand(*soft_weight_mask[key].shape) > 0.5)
         biases_mask[key] = biases_mask[key] + (soft_biase_mask[key] * np.random.rand(*soft_biase_mask[key].shape) > 0.5)
+    print("test in recover weights")
     print(np.array_equal(prev, weights_mask['fc1']))
     mask_info(weights_mask)
     return (weights_mask, biases_mask)
