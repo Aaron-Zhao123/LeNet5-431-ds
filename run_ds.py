@@ -10,10 +10,10 @@ import training_ds
 
 acc_list = []
 count = 0
-pcov = 0
-pfc = 0
-pcov2 = 0
-pfc2 = 0
+pcov = 90
+pfc = 90
+pcov2 = 90
+pfc2 = 90
 # model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
 # pfc = pfc+1
 # param = [
@@ -27,11 +27,11 @@ pfc2 = 0
 # ]
 # acc = training_v6.main(param)
 model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
-while (count < 10):
-    pfc = pfc + 10
-    pfc2 = pfc2 + 10
-    pcov = pcov + 10
-    pcov2 = pcov2 + 10
+while (count < 2):
+    # pfc = pfc + 10
+    # pfc2 = pfc2 + 10
+    # pcov = pcov + 10
+    # pcov2 = pcov2 + 10
     param = [
     ('-pcov',pcov),
     ('-pcov2',pcov2),
