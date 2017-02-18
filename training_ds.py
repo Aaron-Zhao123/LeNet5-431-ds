@@ -306,7 +306,7 @@ def main(argv = None):
             print(np.shape(weights_mask['cov2']))
             print(np.shape(weights_mask['fc1']))
             print(np.array_equal(m1, weights_mask['fc1']))
-            sys.exit()
+            # sys.exit()
         else:
             weights_mask = {
                 'cov1': np.ones([5, 5, NUM_CHANNELS, 20]),
