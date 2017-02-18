@@ -305,7 +305,7 @@ def main(argv = None):
             weights_mask, biases_mask = recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask)
             print(np.shape(weights_mask['cov2']))
             print(np.shape(weights_mask['fc1']))
-            print(m1 == weights_mask['fc1'])
+            print(np.array_equal(m1, weights_mask['fc1']))
             sys.exit()
         else:
             weights_mask = {
