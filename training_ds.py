@@ -143,7 +143,7 @@ threshold is set to 0
 '''
 def dynamic_surgery(weight, pruning_th):
     threshold = np.percentile(np.abs(weight),pruning_th)
-    soft_threshold = np.percentile(np.abs(weight),0.9*pruning_th)
+    soft_threshold = np.percentile(np.abs(weight),0.5*pruning_th)
     weight_mask = np.abs(weight) > threshold
     soft_weight_mask = (np.abs(weight) > soft_threshold) - weight_mask
     return (weight_mask, soft_weight_mask)
@@ -164,24 +164,30 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
         if (key == "cov2"):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov)
-            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_cov)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov2)
+            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_cov2)
 
     for key in keys_fc:
         if (key == "fc1"):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov)
-            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_cov)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc)
+            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_fc)
+            print("-"*70)
             print("Testing my ds")
             print(np.array_equal(weight, weight_mask[key]))
+            (non_zeros, total) = calculate_non_zero_weights(weight_mask['fc1'])
+            print('fc1 hard mask {}'.format(non_zeros))
+            (non_zeros, total) = calculate_non_zero_weights(soft_weight_mask['fc1'])
+            print('fc1 soft mask {}'.format(non_zeros))
             print("test end")
+            print("-"*70)
 
         if (key == "fc2"):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov)
-            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_cov)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc2)
+            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_fc2)
     mask_file_name = 'masks_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(pruning_fc)+ 'pfc'+ str(pruning_fc2)+ 'mask'+'.pkl'
     with open(mask_file_name, 'wb') as f:
         pickle.dump((weight_mask, biases_mask, soft_weight_mask, soft_biase_mask), f)
