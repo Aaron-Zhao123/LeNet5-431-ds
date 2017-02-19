@@ -12,8 +12,8 @@ acc_list = []
 count = 0
 pcov = 90
 pfc = 99.5
-pcov2 = 90
-pfc2 = 90
+pcov2 = 96
+pfc2 = 96
 # model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
 # pfc = pfc+1
 # param = [
@@ -29,10 +29,10 @@ pfc2 = 90
 model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
 retrain_cnt = 0
 while (count < 8):
-    pcov2 = pcov2 + 1
-    pfc2 = pfc2 + 1
+    # pcov2 = pcov2 + 1
+    # pfc2 = pfc2 + 1
     # pfc2 = pfc2 + 10
-    # pcov = pcov + 10
+    pcov = pcov + 1
     # pcov2 = pcov2 + 10
     param = [
     ('-pcov',pcov),
