@@ -167,36 +167,36 @@ if (Test):
     (non_zeros, total) = calculate_non_zero_weights(W_conv1.eval())
     total_weights_cnt += total
     total_non_zero += non_zeros
-    print('cov1 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+    print('cov1 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
     (non_zeros, total) = calculate_non_zero_weights(W_conv2.eval())
     total_weights_cnt += total
     total_non_zero += non_zeros
-    print('cov2 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+    print('cov2 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
     (non_zeros, total) = calculate_non_zero_weights(W_fc1.eval())
     total_weights_cnt += total
     total_non_zero += non_zeros
-    print('fc1 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+    print('fc1 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
     (non_zeros, total) = calculate_non_zero_weights(W_fc2.eval())
     total_weights_cnt += total
     total_non_zero += non_zeros
-    print('fc2 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+    print('fc2 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
     (non_zeros, total) = calculate_non_zero_weights(b_conv1.eval())
     total_weights_cnt += total
     total_non_zero += non_zeros
-    print('cov1 has prunned {} percent of its biases'.format((total-non_zeros)*100/total))
+    print('cov1 has prunned {} percent of its biases'.format((total-non_zeros)*100/float(total)))
     (non_zeros, total) = calculate_non_zero_weights(b_conv2.eval())
     # print(b_conv2.eval().flatten())
     total_weights_cnt += total
     total_non_zero += non_zeros
-    print('cov2 has prunned {} percent of its biases'.format((total-non_zeros)*100/total))
+    print('cov2 has prunned {} percent of its biases'.format((total-non_zeros)*100/float(total)))
     (non_zeros, total) = calculate_non_zero_weights(b_fc1.eval())
     total_weights_cnt += total
     total_non_zero += non_zeros
-    print('fc1 has prunned {} percent of its biases'.format((total-non_zeros)*100/total))
+    print('fc1 has prunned {} percent of its biases'.format((total-non_zeros)*100/float(total)))
     (non_zeros, total) = calculate_non_zero_weights(b_fc2.eval())
     total_weights_cnt += total
     total_non_zero += non_zeros
-    print('fc2 has prunned {} percent of its biases'.format((total-non_zeros)*100/total))
+    print('fc2 has prunned {} percent of its biases'.format((total-non_zeros)*100/float(total)))
 
     print('total number of weights: is now: {}, originally, there are {} parameters'.format(total_weights_cnt, total_non_zero))
 else:
