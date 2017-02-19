@@ -48,7 +48,7 @@ while (count < 8):
         retrain_cnt += 1
         if (retrain_cnt > 3):
             pass
-    else
+    else:
         retrain_cnt = 0
         count = count + 1
 #
