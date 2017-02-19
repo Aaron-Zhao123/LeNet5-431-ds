@@ -11,7 +11,7 @@ import training_ds
 acc_list = []
 count = 0
 pcov = 90
-pfc = 99.6
+pfc = 99.5
 pcov2 = 90
 pfc2 = 90
 # model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
@@ -27,6 +27,7 @@ pfc2 = 90
 # ]
 # acc = training_v6.main(param)
 model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
+retrain_cnt = 0
 while (count < 8):
     pcov2 = pcov2 + 1
     pfc2 = pfc2 + 1
@@ -43,9 +44,13 @@ while (count < 8):
     acc = training_ds.main(param)
     model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
     acc_list.append(acc)
-    count = count + 1
     if (acc < 0.99):
-        break
+        retrain_cnt += 1
+        if (retrain_cnt > 3):
+            pass
+    else
+        retrain_cnt = 0
+        count = count + 1
 #
 # param = [
 # ('-pcov',pcov),
