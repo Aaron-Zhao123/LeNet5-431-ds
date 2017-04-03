@@ -256,7 +256,7 @@ def recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask
     prev = weights_mask['fc1']
     for key in keys:
         weights_mask[key] = weights_mask[key] + (soft_weight_mask[key] * np.random.rand(*soft_weight_mask[key].shape) > 0.5)
-        biases_mask[key] = biases_mask[key] + (soft_biase_mask[key] * np.random.rand(*soft_biase_mask[key].shape) > 0.5)
+        # biases_mask[key] = biases_mask[key] + (soft_biase_mask[key] * np.random.rand(*soft_biase_mask[key].shape) > 0.5)
     print("test in recover weights")
     print(np.array_equal(prev, weights_mask['fc1']))
     mask_info(weights_mask)
