@@ -34,23 +34,38 @@ model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pf
 retrain_cnt = 0
 learning_rate = 1e-4
 while (count < 8):
-    # pcov2 = pcov2 + 1
-    # pfc2 = pfc2 + 1
-    # pfc2 = pfc2 + 10
     if (retrain_cnt == 0):
         pfc = pfc + 1
-    # pcov = pcov + 1
-    # pcov2 = pcov2 + 10
+    # pruning
     param = [
     ('-pcov',pcov),
     ('-pcov2',pcov2),
     ('-pfc',pfc),
     ('-pfc2',pfc2),
     ('-m',model_tag),
-    ('-learning_rate',learning_rate)
+    ('-learning_rate',learning_rate),
+    ('-prune', True),
+    ('-train', False),
+    ('-parent_dir', './'),
+    ('-recover_rate', 0.9)
+    ]
+    _ = training_ds.main(param)
+
+    model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
+    # Train
+    param = [
+    ('-pcov',pcov),
+    ('-pcov2',pcov2),
+    ('-pfc',pfc),
+    ('-pfc2',pfc2),
+    ('-m',model_tag),
+    ('-learning_rate',learning_rate),
+    ('-prune', False),
+    ('-train', True),
+    ('-parent_dir', './'),
+    ('-recover_rate', 0.9)
     ]
     acc = training_ds.main(param)
-    model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
     acc_list.append(acc)
     if (acc < 0.9936):
         retrain_cnt += 1

@@ -141,14 +141,15 @@ def calculate_non_zero_weights(weight):
 Prune weights, weights that has absolute value lower than the
 threshold is set to 0
 '''
-def dynamic_surgery(weight, pruning_th):
+def dynamic_surgery(weight, pruning_th, recover_percent):
     threshold = np.percentile(np.abs(weight),pruning_th)
-    soft_threshold = np.percentile(np.abs(weight),0.8*pruning_th)
+    # soft_threshold = np.percentile(np.abs(weight),(recover_percent*pruning_th))
     weight_mask = np.abs(weight) > threshold
-    soft_weight_mask = (np.abs(weight) > soft_threshold) - weight_mask
+    recover_counts = int(np.sum(1 - weight_mask) * recover_percent)
+    soft_weight_mask = (1 - weight_mask) * (np.random.rand(*weight.shape) > (1-recover_percent))
     return (weight_mask, soft_weight_mask)
 
-def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weight_mask, biases, biases_mask):
+def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weight_mask, biases, biases_mask, recover_rate):
     keys_cov = ['cov1','cov2','fc1','fc2']
     keys_fc = ['fc1', 'fc2']
     next_threshold = {}
@@ -159,20 +160,17 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
         if (key == 'cov1'):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov)
-            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_cov)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov, recover_rate)
         if (key == "cov2"):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov2)
-            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_cov2)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov2, recover_rate)
 
     for key in keys_fc:
         if (key == "fc1"):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc)
-            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_fc)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc, recover_rate)
             print("-"*70)
             print("Testing my ds")
             print(np.array_equal(weight, weight_mask[key]))
@@ -186,8 +184,7 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
         if (key == "fc2"):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc2)
-            biases_mask[key], soft_biase_mask[key] = dynamic_surgery(biase, pruning_fc2)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc2, recover_rate)
     mask_file_name = 'masks_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(pruning_fc*10)))+ 'pfc'+ str(pruning_fc2)+ 'mask'+'.pkl'
     print("training done, save a mask file at "  + mask_file_name)
     with open(mask_file_name, 'wb') as f:
@@ -281,7 +278,7 @@ def main(argv = None):
                 'fc2' : 1
             }
             PRUNE_ONLY = False
-            TRAIN = True
+            TRAIN = False
             for item in opts:
                 print (item)
                 opt = item[0]
@@ -296,12 +293,16 @@ def main(argv = None):
                     pruning_fc2 = val
                 if (opt == '-m'):
                     model_number = val
-                if (opt == '-ponly'):
-                    PRUNE_ONLY = val
-                if (opt == '-test'):
-                    TRAIN = val
                 if (opt == '-learning_rate'):
                     learning_rate = val
+                if (opt == '-prune'):
+                    PRUNE_ONLY = val
+                if (opt == '-train'):
+                    TRAIN = val
+                if (opt == '-parent_dir'):
+                    parent_dir = val
+                if (opt == '-recover_rate'):
+                    recover_rate = val
             print('pruning percentage for cov and fc are {},{}'.format(pruning_cov, pruning_fc))
             print('Train values:',TRAIN)
         except getopt.error, msg:
@@ -312,7 +313,7 @@ def main(argv = None):
         pruning_cov2 = int(pruning_cov2)
         pruning_fc = float(pruning_fc)
         pruning_fc2 = int(pruning_fc2)
-        mask_file = 'masks_log/'+model_number+'mask'+'.pkl'
+        mask_file = parent_dir + 'masks_log/' + model_number+'mask'+'.pkl'
 
         if (TRAIN == True):
             with open(mask_file,'rb') as f:
@@ -422,7 +423,6 @@ def main(argv = None):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
                                 weights_info(training_cnt, c, train_accuracy, accuracy_mean)
-                        # if (training_cnt == 10):
                         if (accuracy_mean > 0.99 or epoch > 80):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
@@ -432,8 +432,9 @@ def main(argv = None):
                                     y: mnist.test.labels[:],
                                     keep_prob: 1.})
                             print('test accuracy is {}'.format(test_accuracy))
-                            if (test_accuracy > 0.990 or epoch > 80):
-                                file_name = 'weights_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(10*pruning_fc)))+ 'pfc'+ str(pruning_fc2)+'.pkl'
+                            if (test_accuracy > 0.9936 or epoch > 80):
+                                # file_name = 'weights_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(10*pruning_fc)))+ 'pfc'+ str(pruning_fc2)+'.pkl'
+                                file_name = parent_dir + 'weights_log/'+ model_number + '.pkl'
                                 with open(file_name, 'wb') as f:
                                     pickle.dump((
                                         weights['cov1'].eval(),
@@ -444,7 +445,6 @@ def main(argv = None):
                                         biases['cov2'].eval(),
                                         biases['fc1'].eval(),
                                         biases['fc2'].eval()),f)
-                                prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weights_mask, biases, biases_mask)
                                 mask_info(weights_mask)
                                 return test_accuracy
                             else:
