@@ -14,6 +14,10 @@ pcov = 90
 pfc = 99.5
 pcov2 = 96
 pfc2 = 96
+pcov = 0
+pfc = 95
+pcov2 = 0
+pfc2 = 0
 # model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
 # pfc = pfc+1
 # param = [
@@ -28,25 +32,32 @@ pfc2 = 96
 # acc = training_v6.main(param)
 model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
 retrain_cnt = 0
+learning_rate = 1e-4
 while (count < 8):
     # pcov2 = pcov2 + 1
     # pfc2 = pfc2 + 1
     # pfc2 = pfc2 + 10
-    pcov = pcov + 1
+    if (retrain_cnt == 0):
+        pfc = pfc + 1
+    # pcov = pcov + 1
     # pcov2 = pcov2 + 10
     param = [
     ('-pcov',pcov),
     ('-pcov2',pcov2),
     ('-pfc',pfc),
     ('-pfc2',pfc2),
-    ('-m',model_tag)
+    ('-m',model_tag),
+    ('-learning_rate',learning_rate)
     ]
     acc = training_ds.main(param)
     model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
     acc_list.append(acc)
-    if (acc < 0.99):
+    if (acc < 0.9936):
         retrain_cnt += 1
-        if (retrain_cnt > 3):
+        if (retrain_cnt % 2 == 0):
+            learning_rate = learning_rate / 2
+        if (retrain_cnt > 8):
+            learning_rate = 1e-4
             pass
     else:
         retrain_cnt = 0
