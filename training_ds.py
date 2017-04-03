@@ -460,7 +460,7 @@ def main(argv = None):
                 correct_prediction = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
             if (TRAIN == False):
                 if (PRUNE_ONLY == True):
-                    prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weights_mask, biases, biases_mask)
+                    prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weights_mask, biases, biases_mask, recover_rate)
                     mask_info(weights_mask)
                 # Calculate accuracy
                 accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
