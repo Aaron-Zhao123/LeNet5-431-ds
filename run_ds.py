@@ -15,7 +15,7 @@ pfc = 99.5
 pcov2 = 96
 pfc2 = 96
 pcov = 0
-pfc = 99.
+pfc = 99.5
 pcov2 = 0
 pfc2 = 0
 # model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
@@ -47,7 +47,7 @@ while (count < 8):
     ('-prune', True),
     ('-train', False),
     ('-parent_dir', './'),
-    ('-recover_rate', 0.02)
+    ('-recover_rate', 0.005)
     ]
     _ = training_ds.main(param)
 
@@ -63,7 +63,7 @@ while (count < 8):
     ('-prune', False),
     ('-train', True),
     ('-parent_dir', './'),
-    ('-recover_rate', 0.02)
+    ('-recover_rate', 0.005)
     ]
     acc = training_ds.main(param)
     acc_list.append(acc)
