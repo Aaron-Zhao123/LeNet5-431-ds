@@ -35,7 +35,7 @@ retrain_cnt = 0
 learning_rate = 1e-4
 while (count < 10):
     if (retrain_cnt == 0):
-        pcov2 = pcov2 + 10.
+        pcov2 = pcov2 + 10
         # pfc = pfc + 0.1
     # pruning
     param = [
