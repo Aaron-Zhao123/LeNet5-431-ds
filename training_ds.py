@@ -189,6 +189,17 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
     print("training done, save a mask file at "  + mask_file_name)
     with open(mask_file_name, 'wb') as f:
         pickle.dump((weight_mask, biases_mask, soft_weight_mask, soft_biase_mask), f)
+    file_name = parent_dir + 'weights_log/'+ 'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(pruning_fc*10)))+ 'pfc'+ str(pruning_fc2)+ 'mask'+'.pkl'
+    with open(file_name, 'wb') as f:
+        pickle.dump((
+            weights['cov1'].eval(),
+            weights['cov2'].eval(),
+            weights['fc1'].eval(),
+            weights['fc2'].eval(),
+            biases['cov1'].eval(),
+            biases['cov2'].eval(),
+            biases['fc1'].eval(),
+            biases['fc2'].eval()),f)
 
 # def quantize_a_value(val):
 #
