@@ -190,6 +190,8 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
     with open(mask_file_name, 'wb') as f:
         pickle.dump((weight_mask, biases_mask, soft_weight_mask, soft_biase_mask), f)
     file_name = 'weights_log/'+ 'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(pruning_fc*10)))+ 'pfc'+ str(pruning_fc2)+ 'mask'+'.pkl'
+    print(file_name)
+    sys.exit()
     with open(file_name, 'wb') as f:
         pickle.dump((
             weights['cov1'].eval(),
