@@ -15,7 +15,7 @@ pfc = 99.5
 pcov2 = 96
 pfc2 = 96
 pcov = 0
-pfc = 100.
+pfc = 99.9
 pcov2 = 0
 pfc2 = 0
 # model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
@@ -72,7 +72,7 @@ while (count < 10):
         retrain_cnt += 1
         if (retrain_cnt % 2 == 0):
             learning_rate = learning_rate / 2
-        if (retrain_cnt > 8):
+        if (retrain_cnt > 5):
             learning_rate = 1e-4
             pass
     else:

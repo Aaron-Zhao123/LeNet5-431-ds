@@ -19,7 +19,7 @@ class Usage(Exception):
 
 # Parameters
 learning_rate = 1e-4
-training_epochs = 200
+training_epochs = 300
 batch_size = 128
 display_step = 1
 
@@ -431,11 +431,11 @@ def main(argv = None):
                                 keep_prob: 1.})
                             accuracy_list = np.concatenate((np.array([train_accuracy]),accuracy_list[0:29]))
                             accuracy_mean = np.mean(accuracy_list)
-                            if (training_cnt % 100 == 0):
+                            if (training_cnt % 1000 == 0):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
                                 weights_info(training_cnt, c, train_accuracy, accuracy_mean)
-                        if (accuracy_mean > 0.99 or epoch > 300):
+                        if (accuracy_mean > 0.99 or epoch > 200):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
                             print('Training ends')
@@ -444,7 +444,7 @@ def main(argv = None):
                                     y: mnist.test.labels[:],
                                     keep_prob: 1.})
                             print('test accuracy is {}'.format(test_accuracy))
-                            if (test_accuracy > 0.9936 or epoch > 300):
+                            if (test_accuracy > 0.9936 or epoch > 200):
                                 # file_name = 'weights_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(10*pruning_fc)))+ 'pfc'+ str(pruning_fc2)+'.pkl'
                                 file_name = parent_dir + 'weights_log/'+ model_number + '.pkl'
                                 with open(file_name, 'wb') as f:
