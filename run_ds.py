@@ -74,6 +74,8 @@ while (count < 10):
             learning_rate = learning_rate / 2
         if (retrain_cnt > 5):
             learning_rate = 1e-4
+            retrain_cnt = 0
+            count = count + 1
             pass
     else:
         retrain_cnt = 0
