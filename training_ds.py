@@ -147,7 +147,7 @@ def dynamic_surgery(weight, pruning_th, recover_percent):
     # recover_counts = int(np.sum(1 - weight_mask) * recover_percent)
     weight_mask = np.abs(weight) > threshold
     # randomly recover x percent of the unpruned weights
-    tmp = (1 - pruning_th) * recover_percent
+    tmp = (100 - pruning_th) / float(100) * recover_percent
     soft_weight_mask = (1 - weight_mask) * (np.random.rand(*weight.shape) > (1-tmp))
     return (weight_mask, soft_weight_mask)
 
