@@ -48,7 +48,7 @@ while (count < 10):
     ('-prune', True),
     ('-train', False),
     ('-parent_dir', './'),
-    ('-recover_rate', 0.005)
+    ('-recover_rate', 0.2)
     ]
     _ = training_ds.main(param)
 
@@ -64,7 +64,7 @@ while (count < 10):
     ('-prune', False),
     ('-train', True),
     ('-parent_dir', './'),
-    ('-recover_rate', 0.005)
+    ('-recover_rate', 0.2)
     ]
     acc = training_ds.main(param)
     acc_list.append(acc)
