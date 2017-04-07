@@ -437,8 +437,6 @@ def main(argv = None):
                             if (training_cnt % 1000 == 0):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
-                                weights_info(training_cnt, c, train_accuracy, accuracy_mean)
-                                prune_info(weights,0)
                         if (accuracy_mean > 0.99 or epoch > 200):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
@@ -447,6 +445,7 @@ def main(argv = None):
                                     x: mnist.test.images[:],
                                     y: mnist.test.labels[:],
                                     keep_prob: 1.})
+                            prune_info(weights,0)
                             print('test accuracy is {}'.format(test_accuracy))
                             print(pruning_cov,pruning_cov2,pruning_fc,pruning_fc2)
                             if (test_accuracy > 0.9936 or epoch > 200):
@@ -503,9 +502,9 @@ def prune_info(weights, counting):
         (non_zeros, total) = calculate_non_zero_weights(weights['cov1'].eval())
         print('cov1 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
         (non_zeros, total) = calculate_non_zero_weights(weights['cov2'].eval())
-        print('cov2 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+        print('cov2 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
         (non_zeros, total) = calculate_non_zero_weights(weights['fc1'].eval())
-        print('fc1 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+        print('fc1 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
         (non_zeros, total) = calculate_non_zero_weights(weights['fc2'].eval())
         print('fc2 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
     if (counting == 1):
