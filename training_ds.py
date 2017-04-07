@@ -275,6 +275,7 @@ def recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask
     print("test in recover weights")
     print(np.array_equal(prev, weights_mask['fc1']))
     mask_info(weights_mask)
+    sys.exit()
     return (weights_mask, biases_mask)
 '''
 Define a training strategy
