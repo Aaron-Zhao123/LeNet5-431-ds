@@ -144,9 +144,11 @@ threshold is set to 0
 def dynamic_surgery(weight, pruning_th, recover_percent):
     threshold = np.percentile(np.abs(weight),pruning_th)
     # soft_threshold = np.percentile(np.abs(weight),(recover_percent*pruning_th))
+    # recover_counts = int(np.sum(1 - weight_mask) * recover_percent)
     weight_mask = np.abs(weight) > threshold
-    recover_counts = int(np.sum(1 - weight_mask) * recover_percent)
-    soft_weight_mask = (1 - weight_mask) * (np.random.rand(*weight.shape) > (1-recover_percent))
+    # randomly recover x percent of the unpruned weights
+    tmp = (1 - pruning_th) * recover_percent
+    soft_weight_mask = (1 - weight_mask) * (np.random.rand(*weight.shape) > (1-tmp))
     return (weight_mask, soft_weight_mask)
 
 def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weight_mask, biases, biases_mask, recover_rate):
@@ -267,7 +269,8 @@ def recover_weights(weights_mask, biases_mask, soft_weight_mask, soft_biase_mask
     mask_info(weights_mask)
     prev = weights_mask['fc1']
     for key in keys:
-        weights_mask[key] = weights_mask[key] + (soft_weight_mask[key] * np.random.rand(*soft_weight_mask[key].shape) > 0.5)
+        weights_mask[key] = weights_mask[key] + (soft_weight_mask[key] * np.random.rand(*soft_weight_mask[key].shape))
+        # weights_mask[key] = weights_mask[key] + (soft_weight_mask[key] * np.random.rand(*soft_weight_mask[key].shape)> 0.5)
         # biases_mask[key] = biases_mask[key] + (soft_biase_mask[key] * np.random.rand(*soft_biase_mask[key].shape) > 0.5)
     print("test in recover weights")
     print(np.array_equal(prev, weights_mask['fc1']))
@@ -435,6 +438,7 @@ def main(argv = None):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
                                 weights_info(training_cnt, c, train_accuracy, accuracy_mean)
+                                prune_info(weights,0)
                         if (accuracy_mean > 0.99 or epoch > 200):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
