@@ -16,7 +16,7 @@ pcov2 = 96
 pfc2 = 96
 pcov = 0
 pfc = 99.5
-pcov2 = 60
+pcov2 = 0
 pfc2 = 0
 # model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
 # pfc = pfc+1
@@ -31,6 +31,7 @@ pfc2 = 0
 # ]
 # acc = training_v6.main(param)
 model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
+pcov2 = 60
 retrain_cnt = 0
 learning_rate = 1e-4
 while (count < 10):
