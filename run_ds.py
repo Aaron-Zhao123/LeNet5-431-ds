@@ -27,7 +27,7 @@ pfc2 = 0
 # ]
 # acc = training_v6.main(param)
 model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
-pfc = 99.
+pfc = 99.5
 pcov2 = 0
 retrain_cnt = 0
 learning_rate = 1e-4
