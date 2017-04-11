@@ -19,7 +19,7 @@ class Usage(Exception):
 
 # Parameters
 learning_rate = 1e-4
-training_epochs = 400
+training_epochs = 1000
 batch_size = 128
 display_step = 1
 
@@ -32,7 +32,7 @@ n_hidden_1 = 300# 1st layer number of features
 n_hidden_2 = 100# 2nd layer number of features
 n_input = 784 # MNIST data input (img shape: 28*28)
 n_classes = 10 # MNIST total classes (0-9 digits)
-dropout = 0.5 
+dropout = 0.5
 
 '''
 pruning Parameters
@@ -352,6 +352,7 @@ def main(argv = None):
         # tf Graph input
         x = tf.placeholder("float", [None, n_input])
         y = tf.placeholder("float", [None, n_classes])
+        lr = tf.placeholder(tf.float32, shape = [])
 
         keep_prob = tf.placeholder(tf.float32)
         keys = ['cov1','cov2','fc1','fc2']
@@ -362,7 +363,7 @@ def main(argv = None):
         pred, pool = conv_network(x_image, weights, biases, keep_prob)
 
         # Define loss and optimizer
-        trainer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+        trainer = tf.train.AdamOptimizer(learning_rate=lr)
     	cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
 
         correct_prediction = tf.equal(tf.argmax(pred,1), tf.argmax(y,1))
@@ -425,30 +426,35 @@ def main(argv = None):
                         _ = sess.run(train_step, feed_dict = {
                                 x: batch_x,
                                 y: batch_y,
+                                lr: learning_rate,
                                 keep_prob: dropout})
                         training_cnt = training_cnt + 1
                         if (training_cnt % 10 == 0):
                             [c, train_accuracy] = sess.run([cost, accuracy], feed_dict = {
                                 x: batch_x,
                                 y: batch_y,
+                                lr: learning_rate,
                                 keep_prob: 1.})
                             accuracy_list = np.concatenate((np.array([train_accuracy]),accuracy_list[0:29]))
                             accuracy_mean = np.mean(accuracy_list)
                             if (training_cnt % 1000 == 0):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
-                        if (accuracy_mean > 0.99 or epoch > 300):
+                        if (accuracy_mean > 0.99 or epoch > 800):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
                             print('Training ends')
                             test_accuracy = accuracy.eval({
                                     x: mnist.test.images[:],
                                     y: mnist.test.labels[:],
+                                    lr: learning_rate,
                                     keep_prob: 1.})
                             prune_info(weights,0)
                             print('test accuracy is {}'.format(test_accuracy))
                             print(pruning_cov,pruning_cov2,pruning_fc,pruning_fc2)
-                            if (test_accuracy > 0.9936 or epoch > 300):
+                            if (epoch % 300 == 0):
+                                learning_rate = learning_rate / float(10)
+                            if (test_accuracy > 0.9936 or epoch > 800):
                                 # file_name = 'weights_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(10*pruning_fc)))+ 'pfc'+ str(pruning_fc2)+'.pkl'
                                 file_name = parent_dir + 'weights_log/'+ model_number + '.pkl'
                                 with open(file_name, 'wb') as f:
