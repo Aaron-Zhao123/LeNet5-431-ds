@@ -28,12 +28,12 @@ pfc2 = 0
 # acc = training_v6.main(param)
 model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(int(round(pfc*10)))+'pfc'+str(pfc2)
 pfc = 99.5
-pcov2 = 0
+pcov2 = 80
 retrain_cnt = 0
 learning_rate = 1e-4
 while (count < 10):
     if (retrain_cnt == 0):
-        pcov2 = pcov2 + 10
+        pcov2 = pcov2 + 5
         # pfc = pfc + 0.1
     # pruning
     param = [

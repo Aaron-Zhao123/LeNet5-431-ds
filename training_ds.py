@@ -19,7 +19,7 @@ class Usage(Exception):
 
 # Parameters
 learning_rate = 1e-4
-training_epochs = 1000
+training_epochs = 1010
 batch_size = 128
 display_step = 1
 
@@ -440,7 +440,7 @@ def main(argv = None):
                             if (training_cnt % 1000 == 0):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
-                        if (accuracy_mean > 0.99 or epoch > 800):
+                        if (accuracy_mean > 0.99 or epoch > 1000):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
                             print('Training ends')
@@ -454,7 +454,7 @@ def main(argv = None):
                             print(pruning_cov,pruning_cov2,pruning_fc,pruning_fc2)
                             if (epoch % 300 == 0):
                                 learning_rate = learning_rate / float(10)
-                            if (test_accuracy > 0.9936 or epoch > 800):
+                            if (test_accuracy > 0.9936 or epoch > 1000):
                                 # file_name = 'weights_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(10*pruning_fc)))+ 'pfc'+ str(pruning_fc2)+'.pkl'
                                 file_name = parent_dir + 'weights_log/'+ model_number + '.pkl'
                                 with open(file_name, 'wb') as f:
