@@ -317,6 +317,7 @@ def main(argv = None):
                     recover_rates = val
             print('pruning percentage for cov and fc are {},{}'.format(pruning_cov, pruning_fc))
             print('Train values:',TRAIN)
+            print('recover values:',recover_rates)
         except getopt.error, msg:
             raise Usage(msg)
 
