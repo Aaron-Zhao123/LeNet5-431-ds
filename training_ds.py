@@ -313,7 +313,7 @@ def main(argv = None):
                     TRAIN = val
                 if (opt == '-parent_dir'):
                     parent_dir = val
-                if (opt == '-recover_rates'):
+                if (opt == '-recover_rate'):
                     recover_rates = val
             print('pruning percentage for cov and fc are {},{}'.format(pruning_cov, pruning_fc))
             print('Train values:',TRAIN)
