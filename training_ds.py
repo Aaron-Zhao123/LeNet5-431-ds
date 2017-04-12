@@ -143,15 +143,12 @@ threshold is set to 0
 '''
 def dynamic_surgery(weight, pruning_th, recover_percent):
     threshold = np.percentile(np.abs(weight),pruning_th)
-    # soft_threshold = np.percentile(np.abs(weight),(recover_percent*pruning_th))
-    # recover_counts = int(np.sum(1 - weight_mask) * recover_percent)
     weight_mask = np.abs(weight) > threshold
-    # randomly recover x percent of the unpruned weights
-    tmp = (100 - pruning_th) / float(100) * recover_percent
+    tmp = (pruning_th) / float(100) * recover_percent
     soft_weight_mask = (1 - weight_mask) * (np.random.rand(*weight.shape) > (1-tmp))
     return (weight_mask, soft_weight_mask)
 
-def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weight_mask, biases, biases_mask, recover_rate):
+def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weight_mask, biases, biases_mask, recover_rates):
     keys_cov = ['cov1','cov2','fc1','fc2']
     keys_fc = ['fc1', 'fc2']
     next_threshold = {}
@@ -162,17 +159,17 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
         if (key == 'cov1'):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov, recover_rate)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov, recover_rates[0])
         if (key == "cov2"):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov2, recover_rate)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_cov2, recover_rates[1])
 
     for key in keys_fc:
         if (key == "fc1"):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc, recover_rate)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc, recover_rates[2])
             print("-"*70)
             print("Testing my ds")
             print(np.array_equal(weight, weight_mask[key]))
@@ -186,7 +183,7 @@ def prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, w
         if (key == "fc2"):
             weight = weights[key].eval()
             biase = biases[key].eval()
-            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc2, recover_rate)
+            weight_mask[key], soft_weight_mask[key] = dynamic_surgery(weight, pruning_fc2, recover_rates[3])
     mask_file_name = 'masks_log/'+'pcov'+str(pruning_cov)+'pcov'+str(pruning_cov2)+'pfc'+str(int(round(pruning_fc*10)))+ 'pfc'+ str(pruning_fc2)+ 'mask'+'.pkl'
     print("training done, save a mask file at "  + mask_file_name)
     with open(mask_file_name, 'wb') as f:
@@ -316,8 +313,8 @@ def main(argv = None):
                     TRAIN = val
                 if (opt == '-parent_dir'):
                     parent_dir = val
-                if (opt == '-recover_rate'):
-                    recover_rate = val
+                if (opt == '-recover_rates'):
+                    recover_rates = val
             print('pruning percentage for cov and fc are {},{}'.format(pruning_cov, pruning_fc))
             print('Train values:',TRAIN)
         except getopt.error, msg:
@@ -482,7 +479,7 @@ def main(argv = None):
                 correct_prediction = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
             if (TRAIN == False):
                 if (PRUNE_ONLY == True):
-                    prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weights_mask, biases, biases_mask, recover_rate)
+                    prune_weights(pruning_cov, pruning_cov2, pruning_fc, pruning_fc2, weights, weights_mask, biases, biases_mask, recover_rates)
                     mask_info(weights_mask)
                 # Calculate accuracy
                 accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
