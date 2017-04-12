@@ -31,7 +31,7 @@ pfc = 99.5
 pcov2 = 85
 retrain_cnt = 0
 learning_rate = 1e-4
-recover_rates = [0,0,0.1,0.01]
+recover_rates = [0,0.1,0.01,0]
 while (count < 10):
     if (retrain_cnt == 0):
         # pcov2 = pcov2 + 5
