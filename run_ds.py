@@ -11,8 +11,8 @@ import training_ds
 acc_list = []
 count = 0
 pcov = 0
-pfc = 0
-pcov2 = 0
+pfc = 99.5
+pcov2 = 80
 pfc2 = 0
 # model_tag = 'pcov'+str(pcov)+'pcov'+str(pcov2)+'pfc'+str(pfc)+'pfc'+str(pfc2)
 # pfc = pfc+1
