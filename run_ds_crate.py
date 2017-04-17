@@ -73,5 +73,5 @@ while (crates['fc1'] < 3):
             print('breadked...')
             sys.exit()
         print('acc summary is {}'.format(acc_list))
-    prev_parent_dir = './assets/' + 'crfc1v' + str(crates['fc1']) + '/'
+    prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
     crates['fc1'] += 0.2
