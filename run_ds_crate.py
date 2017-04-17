@@ -21,7 +21,6 @@ crates = {
 }
 
 prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
-crates['fc1'] += 0.2
 
 while (crates['fc1'] < 3):
     parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
