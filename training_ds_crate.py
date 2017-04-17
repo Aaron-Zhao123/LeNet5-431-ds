@@ -48,8 +48,8 @@ ENABLE_PRUNING = 0
 # Store layers weight & bias
 # def initialize_tf_variables(first_time_training):
 #     if (first_time_training):
-def initialize_variables(model_number):
-    with open('weights_log/'+ 'weight_crate' + str(model_number) +'.pkl','rb') as f:
+def initialize_variables(parent_dir, model_number):
+    with open(parent_dir + 'weight_crate' + str(model_number) +'.pkl','rb') as f:
         wc1, wc2, wd1, out, bc1, bc2, bd1, bout = pickle.load(f)
     weights = {
         # 5x5 conv, 1 input, 32 outputs
@@ -165,7 +165,8 @@ def prune_weights(weights, biases , org_masks, cRates, iter_cnt):
     with open(mask_file_name, 'wb') as f:
         pickle.dump(new_mask, f)
 
-    file_name = 'weights_log/'+'weight_crate'+ str(iter_cnt)+'.pkl'
+    # file_name = 'weights_log/'+'weight_crate'+ str(iter_cnt)+'.pkl'
+    file_name = 'weight_crate'+ str(iter_cnt)+'.pkl'
     print("Pruning done, dorp weights to {}".format(file_name))
     with open(file_name, 'wb') as f:
         pickle.dump((
@@ -332,7 +333,7 @@ def main(argv = None):
 
         x_image = tf.reshape(x,[-1,28,28,1])
         # model number is iter_cnt - 1
-        (weights, biases) = initialize_variables(model_number)
+        (weights, biases) = initialize_variables(parent_dir, model_number)
         weights_new = {}
         for key in keys:
             weights_new[key] = weights[key] * tf.constant(weights_mask[key], dtype=tf.float32)
@@ -427,7 +428,8 @@ def main(argv = None):
                             if (epoch % 300 == 0):
                                 learning_rate = learning_rate / float(10)
                             if (test_accuracy > 0.9936 or epoch > 200):
-                                file_name = parent_dir + 'weights_log/'+ 'weight_crate' + str(iter_cnt) + '.pkl'
+                                # file_name = parent_dir + 'weights_log/'+ 'weight_crate' + str(iter_cnt) + '.pkl'
+                                file_name = parent_dir + 'weight_crate' + str(iter_cnt) + '.pkl'
                                 with open(file_name, 'wb') as f:
                                     pickle.dump((
                                         weights['cov1'].eval(),
