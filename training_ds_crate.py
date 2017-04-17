@@ -458,6 +458,7 @@ def main(argv = None):
                 batch_size = 32
                 total_batch = int(mnist.test.num_examples/batch_size)
                 acc_list = []
+                print(total_batch)
                 for i in range(total_batch):
                     batch_x, batch_y = mnist.test.next_batch(batch_size)
                     accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
