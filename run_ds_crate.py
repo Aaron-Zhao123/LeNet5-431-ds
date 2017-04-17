@@ -18,7 +18,7 @@ crates = {
     'fc1':1,
     'fc2':0
 }
-while (desired_crates < 3):
+while (crates['fc1'] < 3):
     parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir)
