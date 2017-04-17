@@ -148,13 +148,13 @@ def dynamic_surgery(weight, pruning_th, recover_percent):
     soft_weight_mask = (1 - weight_mask) * (np.random.rand(*weight.shape) > (1-tmp))
     return (weight_mask, soft_weight_mask)
 
-def prune_weights(weights, biases , org_masks, cRate, iter_cnt):
+def prune_weights(weights, biases , org_masks, cRates, iter_cnt):
     keys = ['cov1','cov2','fc1','fc2']
     new_mask = {}
     for key in keys:
         w_eval = weights[key].eval()
-        threshold_off = 0.9*(np.mean(w_eval) + cRate * np.std(w_eval))
-        threshold_on = 1.1*(np.mean(w_eval) + cRate * np.std(w_eval))
+        threshold_off = 0.9*(np.mean(w_eval) + cRates[key] * np.std(w_eval))
+        threshold_on = 1.1*(np.mean(w_eval) + cRates[key] * np.std(w_eval))
         # elements at this postion becomes zeros
         mask_off = np.abs(w_eval) < threshold_off
         # elements at this postion becomes ones

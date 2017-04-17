@@ -12,7 +12,12 @@ learning_rate = 1e-5
 recover_rates = [0,0.1,0.002,0]
 model_tag = 0
 count = 0
-crate = 3
+crates = {
+    'cov1':1,
+    'cov2':1,
+    'fc1':3,
+    'fc2':1
+}
 while (count <= 5):
     # pruning
     count = count + 1
@@ -28,7 +33,7 @@ while (count <= 5):
     ('-parent_dir', './'),
     ('-recover_rate', recover_rates),
     ('-iter_cnt', count),
-    ('-crate',crate)
+    ('-crate',crates)
     ]
     _ = training_ds_crate.main(param)
 
@@ -48,7 +53,7 @@ while (count <= 5):
     ('-parent_dir', './'),
     ('-recover_rate', recover_rates),
     ('-iter_cnt', count),
-    ('-crate',crate)
+    ('-crate',crates)
     ]
     acc = training_ds_crate.main(param)
     acc_list.append(acc)
