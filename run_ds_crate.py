@@ -12,7 +12,7 @@ learning_rate = 1e-5
 recover_rates = [0,0.1,0.002,0]
 model_tag = 0
 count = 0
-crate = 1
+crate = 3
 while (count <= 5):
     # pruning
     count = count + 1
