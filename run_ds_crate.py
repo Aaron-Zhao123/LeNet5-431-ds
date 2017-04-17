@@ -40,7 +40,6 @@ while (crates['fc1'] < 3):
         ('-prune', True),
         ('-train', False),
         ('-parent_dir', parent_dir),
-        ('-recover_rate', recover_rates),
         ('-iter_cnt', count),
         ('-crate',crates)
         ]
@@ -60,7 +59,6 @@ while (crates['fc1'] < 3):
         ('-prune', False),
         ('-train', True),
         ('-parent_dir', parent_dir),
-        ('-recover_rate', recover_rates),
         ('-iter_cnt', count),
         ('-crate',crates)
         ]
