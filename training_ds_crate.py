@@ -455,7 +455,7 @@ def main(argv = None):
                     mask_info(weights_mask)
                     prune_weights(weights, biases, weights_mask, crate, iter_cnt)
                 # Calculate accuracy
-                batch_size = 32
+                batch_size = 128
                 total_batch = int(mnist.test.num_examples/batch_size)
                 acc_list = []
                 print(total_batch)
@@ -464,7 +464,6 @@ def main(argv = None):
                     accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
                     test_accuracy = accuracy.eval({x: batch_x, y: batch_y, keep_prob : 1.0})
                     acc_list.append(test_accuracy)
-                print(acc_list)
                 print("Accuracy:", np.mean(acc_list))
                 with open('acc_log_10.txt','a') as f:
                     f.write(str(test_accuracy)+'\n')
