@@ -16,12 +16,11 @@ count = 0
 crates = {
     'cov1': 0,
     'cov2': 0,
-    'fc1':1,
-    'fc2':0
+    'fc1': 1.,
+    'fc2': 0
 }
 
 prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
-crates['fc1']=1.2,
 
 while (crates['fc1'] < 3):
     parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
