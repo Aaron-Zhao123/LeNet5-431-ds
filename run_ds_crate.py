@@ -18,12 +18,18 @@ crates = {
     'fc1':1,
     'fc2':0
 }
+
+prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
+crates['fc1']=1.2,
+
 while (crates['fc1'] < 3):
     parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir)
         src_dir = prev_parent_dir+'weight_crate'+str(count)+'.pkl'
         dest_dir = parent_dir + 'weight_crate0.pkl'
+        print(src_dir)
+        print(dest_dir)
         copyfile(src_dir,dest_dir)
         src_dir = prev_parent_dir+'mask_crate'+str(count)+'.pkl'
         dest_dir = parent_dir + 'mask_crate0.pkl'
