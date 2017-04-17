@@ -426,7 +426,7 @@ def main(argv = None):
                             if (epoch % 300 == 0):
                                 learning_rate = learning_rate / float(10)
                             if (test_accuracy > 0.9936 or epoch > 100):
-                                file_name = parent_dir + 'weights_log/'+ 'weight_crate' + iter_cnt + '.pkl'
+                                file_name = parent_dir + 'weights_log/'+ 'weight_crate' + str(iter_cnt) + '.pkl'
                                 with open(file_name, 'wb') as f:
                                     pickle.dump((
                                         weights['cov1'].eval(),
