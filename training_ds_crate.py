@@ -464,6 +464,7 @@ def main(argv = None):
                     accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
                     acc_list.append(accuracy)
                 # test_accuracy = accuracy.eval({x: batch_x, y: batch_y, keep_prob : 1.0})
+                print(acc_list)
                 print("Accuracy:", np.mean(acc_list))
                 with open('acc_log_10.txt','a') as f:
                     f.write(str(test_accuracy)+'\n')
