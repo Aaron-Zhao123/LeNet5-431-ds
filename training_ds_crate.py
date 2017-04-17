@@ -160,7 +160,7 @@ def prune_weights(weights, biases , org_masks, cRates, iter_cnt):
         # elements at this postion becomes ones
         mask_on = np.abs(w_eval) > threshold_on
         new_mask[key] = np.logical_or(((1 - mask_off) * org_masks[key]),mask_on).astype(int)
-    mask_file_name = 'masks_log/'+'mask_crate'+ str(iter_cnt)+'.pkl'
+    mask_file_name = parent_dir+'mask_crate'+ str(iter_cnt)+'.pkl'
     print("training done, save a mask file at "  + mask_file_name)
     with open(mask_file_name, 'wb') as f:
         pickle.dump(new_mask, f)
@@ -302,7 +302,7 @@ def main(argv = None):
         pruning_cov2 = int(pruning_cov2)
         pruning_fc = float(pruning_fc)
         pruning_fc2 = int(pruning_fc2)
-        mask_file = parent_dir + 'masks_log/' + 'mask_crate'+ str(iter_cnt) +'.pkl'
+        mask_file = parent_dir +  'mask_crate'+ str(iter_cnt) +'.pkl'
 
         if (TRAIN == True):
             with open(mask_file,'rb') as f:

@@ -25,6 +25,9 @@ while (crates['fc1'] < 3):
         src_dir = prev_parent_dir+'weight_crate'+str(count)+'.pkl'
         dest_dir = parent_dir + 'weight_crate0.pkl'
         copyfile(src_dir,dest_dir)
+        src_dir = prev_parent_dir+'mask_crate'+str(count)+'.pkl'
+        dest_dir = parent_dir + 'mask_crate0.pkl'
+        copyfile(src_dir,dest_dir)
     count = 0
     model_tag = 0
     while (count <= 5):
