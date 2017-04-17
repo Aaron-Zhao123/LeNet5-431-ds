@@ -411,6 +411,7 @@ def main(argv = None):
                             if (training_cnt % 1000 == 0):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
+                                prune_info(weights_new,0)
                         if (accuracy_mean > 0.99 or epoch > 300):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
