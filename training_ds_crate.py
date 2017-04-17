@@ -455,8 +455,9 @@ def main(argv = None):
                     mask_info(weights_mask)
                     prune_weights(weights, biases, weights_mask, crate, iter_cnt)
                 # Calculate accuracy
+                batch_size = 32
                 total_batch = int(mnist.test.num_examples/batch_size)
-                acc_list = []
+                acc_list = np.array([])
                 for i in range(total_batch):
                     batch_x, batch_y = mnist.test.next_batch(batch_size)
                     accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
