@@ -396,7 +396,7 @@ def main(argv = None):
             accuracy_mean = 0
             c = 0
             train_accuracy = 0
-
+            batch_size = 128
             if (TRAIN == True):
                 print('Training starts ...')
                 for epoch in range(training_epochs):
@@ -424,7 +424,7 @@ def main(argv = None):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
                                 prune_info(weights_new,0)
-                        if (accuracy_mean > 0.99 or epoch > 300):
+                        if (accuracy_mean > 0.99 or epoch > 2):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
                             print('Training ends')
@@ -438,7 +438,7 @@ def main(argv = None):
                             print(pruning_cov,pruning_cov2,pruning_fc,pruning_fc2)
                             if (epoch % 300 == 0):
                                 learning_rate = learning_rate / float(10)
-                            if (test_accuracy > 0.9936 or epoch > 200):
+                            if (test_accuracy > 0.9936 or epoch > 2):
                                 # file_name = parent_dir + 'weights_log/'+ 'weight_crate' + str(iter_cnt) + '.pkl'
                                 file_name = parent_dir + 'weight_crate' + str(iter_cnt) + '.pkl'
                                 with open(file_name, 'wb') as f:
