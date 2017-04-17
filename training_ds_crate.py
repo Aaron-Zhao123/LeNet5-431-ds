@@ -333,8 +333,12 @@ def main(argv = None):
         x_image = tf.reshape(x,[-1,28,28,1])
         # model number is iter_cnt - 1
         (weights, biases) = initialize_variables(model_number)
+        weights_new = {}
+        for key in keys:
+            weights_new[key] = weights[key] * tf.constant(weights_mask[key], dtype=tf.float32)
+
         # Construct model
-        pred, pool = conv_network(x_image, weights, biases, keep_prob)
+        pred, pool = conv_network(x_image, weights_new, biases, keep_prob)
 
         # Define loss and optimizer
         trainer = tf.train.AdamOptimizer(learning_rate=lr)
@@ -364,8 +368,8 @@ def main(argv = None):
 
             # retain the masks on the weights
             # only weights are masked
-            for key in keys:
-                sess.run(weights[key].assign(weights[key].eval()*weights_mask[key]))
+            # for key in keys:
+            #     sess.run(weights[key].assign(weights[key].eval()*weights_mask[key]))
                 # sess.run(biases[key].assign(biases[key].eval()*biases_mask[key]))
 
 
