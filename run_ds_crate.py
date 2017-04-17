@@ -10,20 +10,20 @@ pfc = 0
 pcov2 = 0
 pfc2 = 0
 retrain_cnt = 0
-learning_rate = 1e-5
+learning_rate = 1e-4
 model_tag = 0
 count = 0
 crates = {
     'cov1': 0,
     'cov2': 0,
-    'fc1': 1.,
+    'fc1': 2.4,
     'fc2': 0
 }
 
-prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
+prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
 
-while (crates['fc1'] < 3):
-    parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
+while (crates['fc1'] < 3.2):
+    parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
     print('hi')
     if not os.path.exists(parent_dir):
         print('am i here')
@@ -38,7 +38,7 @@ while (crates['fc1'] < 3):
         copyfile(src_dir,dest_dir)
     count = 0
     model_tag = 0
-    while (count <= 5):
+    while (count <= 7):
         # pruning
         count = count + 1
         param = [
@@ -74,10 +74,10 @@ while (crates['fc1'] < 3):
         ('-crate',crates)
         ]
         acc = training_ds_crate.main(param)
-        acc_list.append(acc)
         if (acc > 0.9936):
             print('acc passed...')
             break
         print('acc summary is {}'.format(acc_list))
-    prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
-    crates['fc1'] += 0.2
+    acc_list.append((acc,crates['fc1']))
+    prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
+    crates['fc1'] += 0.05
