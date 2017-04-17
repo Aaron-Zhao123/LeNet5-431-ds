@@ -164,6 +164,17 @@ def prune_weights(weights, biases , org_masks, cRates, iter_cnt, parent_dir):
     print("training done, save a mask file at "  + mask_file_name)
     with open(mask_file_name, 'wb') as f:
         pickle.dump(new_mask, f)
+    mask_info(new_mask)
+    with open(file_name, 'wb') as f:
+        pickle.dump((
+            weights['cov1'].eval(),
+            weights['cov2'].eval(),
+            weights['fc1'].eval(),
+            weights['fc2'].eval(),
+            biases['cov1'].eval(),
+            biases['cov2'].eval(),
+            biases['fc1'].eval(),
+            biases['fc2'].eval()),f)
 
     # file_name = 'weights_log/'+'weight_crate'+ str(iter_cnt)+'.pkl'
     file_name = 'weight_crate'+ str(iter_cnt)+'.pkl'
