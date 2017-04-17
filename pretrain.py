@@ -11,6 +11,7 @@ np.set_printoptions(precision=128)
 open_file_name = 'weights_log/pcov0pcov90pfc995pfc0.pkl'
 # open_file_name = 'weights_log/pcov90pfc90'+'.pkl'
 # open_file_name = 'weights_log/weights2.pkl'
+open_file_name = 'weight0.pkl'
 Test = True;
 # Test = False;
 MASK_GEN = True
@@ -58,8 +59,11 @@ def mask_gen():
     for key in keys:
         masks[key] = weights[key] != 0
         b_masks[key] = biases[key] != 0
-    with open('masks_log/pcov0pcov0pfc0pfc0mask.pkl', 'wb') as f:
-        pickle.dump((masks, b_masks, soft_weights_mask, soft_biases_mask),f)
+    # with open('masks_log/pcov0pcov0pfc0pfc0mask.pkl', 'wb') as f:
+    #     pickle.dump((masks, b_masks, soft_weights_mask, soft_biases_mask),f)
+
+    with open('masks_log/maskcrate0.pkl', 'wb') as f:
+        pickle.dump(masks,f)
 
 
 
