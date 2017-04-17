@@ -11,11 +11,12 @@ np.set_printoptions(precision=128)
 open_file_name = 'weights_log/pcov0pcov90pfc995pfc0.pkl'
 # open_file_name = 'weights_log/pcov90pfc90'+'.pkl'
 # open_file_name = 'weights_log/weights2.pkl'
-open_file_name = 'weight0.pkl'
+open_file_name = 'weights_log/weight_crate6.pkl'
+open_mask_name = 'masks_log/mask_crate6.pkl'
 Test = True;
 # Test = False;
-MASK_GEN = True
-# MASK_GEN = False
+# MASK_GEN = True
+MASK_GEN = False
 sess = tf.InteractiveSession()
 mnist = input_data.read_data_sets("MNIST.data/", one_hot = True)
 
@@ -88,6 +89,12 @@ def initialize_variables():
         'fc1': tf.Variable(bd1),
         'fc2': tf.Variable(bout)
     }
+    with open(open_mask_name, 'rb') as f:
+        mask = pickle.load(f)
+    keys = ['cov1', 'cov2', 'fc1', 'fc2']
+    for key in keys:
+        weights[key] = mask[key] * weights[key]
+
     return (weights, biases)
 def weight_variable(shape):
   initial = tf.truncated_normal(shape, stddev=0.1)
