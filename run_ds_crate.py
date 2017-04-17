@@ -13,10 +13,10 @@ recover_rates = [0,0.1,0.002,0]
 model_tag = 0
 count = 0
 crates = {
-    'cov1':1,
-    'cov2':1,
-    'fc1':3,
-    'fc2':1
+    'cov1':1.8,
+    'cov2':2,
+    'fc1':2.8,
+    'fc2':2
 }
 while (count <= 5):
     # pruning
