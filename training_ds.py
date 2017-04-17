@@ -385,11 +385,6 @@ def main(argv = None):
         # Launch the graph
         with tf.Session() as sess:
             sess.run(init)
-            # restore model if exists
-            # if (pruning_number != 0 and os.path.isfile("tmp_20160126/model.meta")):
-                # op = tf.train.import_meta_graph("tmp_20160126/model.meta")
-                # op.restore(sess,tf.train.latest_checkpoint('tmp_20160126/'))
-                # print ("model found and restored")
 
             # print(weights['fc1'].eval())
             keys = ['cov1','cov2','fc1','fc2']

@@ -420,7 +420,7 @@ def main(argv = None):
                                     y: mnist.test.labels[:],
                                     lr: learning_rate,
                                     keep_prob: 1.})
-                            prune_info(weights,0)
+                            prune_info(weights_new,0)
                             print('test accuracy is {}'.format(test_accuracy))
                             print(pruning_cov,pruning_cov2,pruning_fc,pruning_fc2)
                             if (epoch % 300 == 0):
