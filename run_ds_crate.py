@@ -19,7 +19,7 @@ crates = {
     'fc2':0
 }
 while (desired_crates < 3):
-    parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10) + '/'
+    parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir)
         src_dir = prev_parent_dir+'weight_crate'+str(count)+'.pkl'
