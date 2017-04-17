@@ -1,4 +1,5 @@
 import os
+import sys
 import training_ds_crate
 from shutil import copyfile
 
@@ -24,12 +25,15 @@ crates['fc1']=1.2,
 
 while (crates['fc1'] < 3):
     parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
+    print('hi')
     if not os.path.exists(parent_dir):
+        print('am i here')
         os.makedirs(parent_dir)
         src_dir = prev_parent_dir+'weight_crate'+str(count)+'.pkl'
         dest_dir = parent_dir + 'weight_crate0.pkl'
         print(src_dir)
         print(dest_dir)
+        sys.exit()
         copyfile(src_dir,dest_dir)
         src_dir = prev_parent_dir+'mask_crate'+str(count)+'.pkl'
         dest_dir = parent_dir + 'mask_crate0.pkl'
@@ -76,8 +80,6 @@ while (crates['fc1'] < 3):
         if (acc > 0.9936):
             print('acc passed...')
             break
-            print('breadked...')
-            sys.exit()
         print('acc summary is {}'.format(acc_list))
     prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*10)) + '/'
     crates['fc1'] += 0.2
