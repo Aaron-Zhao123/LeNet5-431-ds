@@ -64,7 +64,7 @@ while (crates['fc1'] < 3):
         ]
         acc = training_ds_crate.main(param)
         acc_list.append(acc)
-        if (acc > 0.9946):
+        if (acc > 0.9936):
             break
         print('acc summary is {}'.format(acc_list))
     prev_parent_dir = './assets/' + 'crfc1v' + str(crates['fc1']) + '/'

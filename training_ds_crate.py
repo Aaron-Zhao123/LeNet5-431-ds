@@ -455,11 +455,17 @@ def main(argv = None):
                     mask_info(weights_mask)
                     prune_weights(weights, biases, weights_mask, crate, iter_cnt)
                 # Calculate accuracy
-                accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
-                test_accuracy = accuracy.eval({x: mnist.test.images, y: mnist.test.labels, keep_prob : 1.0})
-                print("Accuracy:", test_accuracy)
+                total_batch = int(mnist.test.num_examples/batch_size)
+                acc_list = []
+                for i in range(total_batch):
+                    batch_x, batch_y = mnist.test.next_batch(batch_size)
+                    accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+                    acc_list.append(accuracy)
+                # test_accuracy = accuracy.eval({x: batch_x, y: batch_y, keep_prob : 1.0})
+                print("Accuracy:", np.mean(acc_list))
                 with open('acc_log_10.txt','a') as f:
                     f.write(str(test_accuracy)+'\n')
+                return (np.mean(acc_list))
     except Usage, err:
         print >> sys.stderr, err.msg
         print >> sys.stderr, "for help use --help"
