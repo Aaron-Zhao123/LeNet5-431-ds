@@ -31,10 +31,9 @@ while (crates['fc1'] < 3):
         os.makedirs(parent_dir)
         src_dir = prev_parent_dir+'weight_crate'+str(count)+'.pkl'
         dest_dir = parent_dir + 'weight_crate0.pkl'
+        copyfile(src_dir,dest_dir)
         print(src_dir)
         print(dest_dir)
-        sys.exit()
-        copyfile(src_dir,dest_dir)
         src_dir = prev_parent_dir+'mask_crate'+str(count)+'.pkl'
         dest_dir = parent_dir + 'mask_crate0.pkl'
         copyfile(src_dir,dest_dir)
