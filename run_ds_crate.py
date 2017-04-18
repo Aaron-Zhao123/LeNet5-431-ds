@@ -16,13 +16,13 @@ count = 0
 crates = {
     'cov1': 0,
     'cov2': 0,
-    'fc1': 2.6,
+    'fc1': 3.19,
     'fc2': 0
 }
 
 prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
 
-while (crates['fc1'] < 3.2):
+while (crates['fc1'] < 3.4):
     parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
     print('hi')
     if not os.path.exists(parent_dir):
@@ -80,4 +80,4 @@ while (crates['fc1'] < 3.2):
         print('acc summary is {}'.format(acc_list))
     acc_list.append((acc,crates['fc1']))
     prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
-    crates['fc1'] += 0.05
+    crates['fc1'] += 0.01
