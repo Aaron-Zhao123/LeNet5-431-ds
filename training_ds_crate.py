@@ -177,7 +177,6 @@ def prune_weights(weights, biases , org_masks, cRates, iter_cnt, parent_dir):
             biases['fc1'].eval(),
             biases['fc2'].eval()),f)
 
-    # file_name = 'weights_log/'+'weight_crate'+ str(iter_cnt)+'.pkl'
     file_name = 'weight_crate'+ str(iter_cnt)+'.pkl'
     print("Pruning done, dorp weights to {}".format(file_name))
     with open(file_name, 'wb') as f:

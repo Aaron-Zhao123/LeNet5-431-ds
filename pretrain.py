@@ -73,6 +73,7 @@ def mask_gen():
 
 
 def initialize_variables():
+    print(open_file_name)
     with open(open_file_name,'rb') as f:
         wc1, wc2, wd1, out, bc1, bc2, bd1, bout = pickle.load(f)
     weights = {
