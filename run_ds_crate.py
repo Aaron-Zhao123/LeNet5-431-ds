@@ -15,16 +15,16 @@ model_tag = 0
 count = 0
 crates = {
     'cov1': 0,
-    'cov2': 0,
+    'cov2': 1.,
     'fc1': 3.19,
     'fc2': 0
 }
 
-prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
+prev_parent_dir = './assets/' + 'cr' + 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100)) + '/'
 
 while (crates['fc1'] < 3.4):
-    parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
-    print('hi')
+    # parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
+    parent_dir = './assets/' + 'cr' + 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100)) + '/'
     if not os.path.exists(parent_dir):
         print('am i here')
         os.makedirs(parent_dir)
@@ -79,5 +79,7 @@ while (crates['fc1'] < 3.4):
             break
         print('acc summary is {}'.format(acc_list))
     acc_list.append((acc,crates['fc1']))
-    prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
-    crates['fc1'] += 0.01
+    # prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
+    prev_parent_dir = './assets/' + 'cr' + 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100)) + '/'
+    # crates['fc1'] += 0.01
+    crates['cov2'] += 0.2
