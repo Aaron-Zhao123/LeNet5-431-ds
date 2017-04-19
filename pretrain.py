@@ -180,7 +180,7 @@ def params_eval(name, b, W):
     (rB, tB) = calculate_non_zero_weights(b)
     nonzeros = rW + rB
     total = tW + tB
-    percent = (total - non_zeros) * 100 / float(total)
+    percent = (total - nonzeros) * 100 / float(total)
     print ('{} has pruned {} percent of params'.format(name, percent))
 
 if (Test):
