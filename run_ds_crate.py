@@ -14,10 +14,10 @@ learning_rate = 1e-4
 model_tag = 0
 count = 0
 crates = {
-    'cov1': 1.0,
+    'cov1': 0.1,
     'cov2': 1.8,
     'fc1': 3.38,
-    'fc2': 1.0
+    'fc2': 0.1
 }
 
 prev_parent_dir = './assets/' + 'cr' + 'cov1v' + str(int(crates['cov1']*10))+ 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100))  + 'fc2v' + str(int(crates['fc2']*10)) + '/'
