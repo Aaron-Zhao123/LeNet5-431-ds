@@ -15,6 +15,8 @@ np.set_printoptions(precision=128)
 # open_mask_name = 'masks_log/mask_crate6.pkl'
 open_mask_name = 'assets/crfc1v338/mask_crate1.pkl'
 open_file_name = 'assets/crfc1v338/weight_crate1.pkl'
+open_file_name = 'assets/crcov1v6cov2v18fc1v338fc2v10/weight_crate1.pkl'
+open_mask_name = 'assets/crcov1v6cov2v18fc1v338fc2v10/mask_crate1.pkl'
 # open_file_name = 'assets/crfc1v338/mask_crate1.pkl'
 Test = True;
 # Test = False;
@@ -66,8 +68,8 @@ def mask_gen():
     # with open('masks_log/pcov0pcov0pfc0pfc0mask.pkl', 'wb') as f:
     #     pickle.dump((masks, b_masks, soft_weights_mask, soft_biases_mask),f)
 
-    with open('masks_log/maskcrate0.pkl', 'wb') as f:
-        pickle.dump(masks,f)
+    # with open('masks_log/maskcrate0.pkl', 'wb') as f:
+    #     pickle.dump(masks,f)
 
 
 
@@ -173,45 +175,22 @@ correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 sess.run(tf.global_variables_initializer())
 
+def params_eval(name, b, W):
+    (rW, tW) = calculate_non_zero_weights(W)
+    (rB, tB) = calculate_non_zero_weights(b)
+    nonzeros = rW + rB
+    total = tW + tB
+    percent = (total - non_zeros) * 100 / float(total)
+    print ('{} has pruned {} percent of params'.format(name, percent))
+
 if (Test):
     # check how many weights are prunned
     print('-'*79)
     print('Pruning information')
-    total_weights_cnt = 0
-    total_non_zero = 0
-    (non_zeros, total) = calculate_non_zero_weights(W_conv1.eval())
-    total_weights_cnt += total
-    total_non_zero += non_zeros
-    print('cov1 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
-    (non_zeros, total) = calculate_non_zero_weights(W_conv2.eval())
-    total_weights_cnt += total
-    total_non_zero += non_zeros
-    print('cov2 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
-    (non_zeros, total) = calculate_non_zero_weights(W_fc1.eval())
-    total_weights_cnt += total
-    total_non_zero += non_zeros
-    print('fc1 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
-    (non_zeros, total) = calculate_non_zero_weights(W_fc2.eval())
-    total_weights_cnt += total
-    total_non_zero += non_zeros
-    print('fc2 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
-    (non_zeros, total) = calculate_non_zero_weights(b_conv1.eval())
-    total_weights_cnt += total
-    total_non_zero += non_zeros
-    print('cov1 has prunned {} percent of its biases'.format((total-non_zeros)*100/float(total)))
-    (non_zeros, total) = calculate_non_zero_weights(b_conv2.eval())
-    # print(b_conv2.eval().flatten())
-    total_weights_cnt += total
-    total_non_zero += non_zeros
-    print('cov2 has prunned {} percent of its biases'.format((total-non_zeros)*100/float(total)))
-    (non_zeros, total) = calculate_non_zero_weights(b_fc1.eval())
-    total_weights_cnt += total
-    total_non_zero += non_zeros
-    print('fc1 has prunned {} percent of its biases'.format((total-non_zeros)*100/float(total)))
-    (non_zeros, total) = calculate_non_zero_weights(b_fc2.eval())
-    total_weights_cnt += total
-    total_non_zero += non_zeros
-    print('fc2 has prunned {} percent of its biases'.format((total-non_zeros)*100/float(total)))
+    params_eval('cov1',b_conv1.eval(),W_conv1.eval())
+    params_eval('cov2',b_conv2.eval(),W_conv2.eval())
+    params_eval('fc1',b_fc1.eval(),W_fc1.eval())
+    params_eval('fc2',b_fc2.eval(),W_fc2.eval())
 
     print('total number of weights: is now: {}, originally, there are {} parameters'.format(total_weights_cnt, total_non_zero))
 else:
