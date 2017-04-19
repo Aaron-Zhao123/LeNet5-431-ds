@@ -14,17 +14,19 @@ learning_rate = 1e-4
 model_tag = 0
 count = 0
 crates = {
-    'cov1': 0,
-    'cov2': 1.,
+    'cov1': 1.0,
+    'cov2': 1.8,
     'fc1': 3.38,
-    'fc2': 0
+    'fc2': 1.0
 }
 
-prev_parent_dir = './assets/' + 'cr' + 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100)) + '/'
+prev_parent_dir = './assets/' + 'cr' + 'cov1v' + str(int(crates['cov1']*10))+ 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100))  + 'fc2v' + str(int(crates['fc2']*10)) + '/'
 
-while (crates['fc1'] < 3.4):
+while (crates['fc2'] < 2.):
     # parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
-    parent_dir = './assets/' + 'cr' + 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100)) + '/'
+    parent_dir = './assets/' + 'cr' + 'cov1v' + str(int(crates['cov1']*10))+ 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100))  + 'fc2v' + str(int(crates['fc2']*10)) + '/'
+
+    # parent_dir = './assets/' + 'cr' + 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100)) + '/'
     if not os.path.exists(parent_dir):
         print('am i here')
         os.makedirs(parent_dir)
@@ -80,6 +82,8 @@ while (crates['fc1'] < 3.4):
         print('acc summary is {}'.format(acc_list))
     acc_list.append((acc,crates['fc1']))
     # prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
-    prev_parent_dir = './assets/' + 'cr' + 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100)) + '/'
+    # prev_parent_dir = './assets/' + 'cr' + 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100)) + '/'
+    prev_parent_dir = './assets/' + 'cr' + 'cov1v' + str(int(crates['cov1']*10))+ 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100))  + 'fc2v' + str(int(crates['fc2']*10)) + '/'
     # crates['fc1'] += 0.01
-    crates['cov2'] += 0.2
+    crates['cov1'] += 0.1
+    crates['fc2'] += 0.2
