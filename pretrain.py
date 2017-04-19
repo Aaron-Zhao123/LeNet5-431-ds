@@ -191,8 +191,6 @@ if (Test):
     params_eval('cov2',b_conv2.eval(),W_conv2.eval())
     params_eval('fc1',b_fc1.eval(),W_fc1.eval())
     params_eval('fc2',b_fc2.eval(),W_fc2.eval())
-
-    print('total number of weights: is now: {}, originally, there are {} parameters'.format(total_weights_cnt, total_non_zero))
 else:
     # train the model
     for i in range(200000):
