@@ -148,7 +148,7 @@ def dynamic_surgery(weight, pruning_th, recover_percent):
     soft_weight_mask = (1 - weight_mask) * (np.random.rand(*weight.shape) > (1-tmp))
     return (weight_mask, soft_weight_mask)
 
-def prune_weights(weights, biases , org_masks, cRates, iter_cnt, parent_dir):
+def prune_weights(weights, biases, org_masks, cRates, iter_cnt, parent_dir):
     keys = ['cov1','cov2','fc1','fc2']
     new_mask = {}
     for key in keys:
