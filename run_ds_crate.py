@@ -72,7 +72,7 @@ while (crates['fc1'] < 4.):
     ('-learning_rate',learning_rate),
     ('-prune', False),
     ('-train', False),
-    ('--next_iter_save', True),
+    ('-next_iter_save', True),
     ('-parent_dir', parent_dir),
     ('-iter_cnt', count),
     ('-crate',crates)
