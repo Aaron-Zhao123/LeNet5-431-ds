@@ -46,7 +46,7 @@ while (crates['fc1'] < 4.):
         ('-lambda_1', 1e-7),
         ('-lambda_2', 1e-4)
         ]
-        _ = training_ds_crate.main(param)
+        _ = training_ds_crate_l1l2.main(param)
 
         # after pruning
         # train weights based on the pruned model
@@ -62,7 +62,7 @@ while (crates['fc1'] < 4.):
         ('-lambda_1', 1e-7),
         ('-lambda_2', 1e-4)
         ]
-        acc = training_ds_crate.main(param)
+        acc = training_ds_crate_l1l2.main(param)
         if (acc > 0.9936):
             print('acc passed...')
             break
@@ -82,5 +82,5 @@ while (crates['fc1'] < 4.):
     ('-lambda_1', 1e-7),
     ('-lambda_2', 1e-4)
     ]
-    _ = training_ds_crate.main(param)
+    _ = training_ds_crate_l1l2.main(param)
     acc_list.append((acc,crates['fc1']))
