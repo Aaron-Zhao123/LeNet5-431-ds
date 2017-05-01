@@ -24,12 +24,12 @@ count = 0
 crates = {
     'cov1': 0.,
     'cov2': 0.,
-    'fc1': 0.,
+    'fc1': 4.,
     'fc2': 0.
 }
 parent_dir = 'assets/'
 
-while (crates['fc1'] < 4.):
+while (crates['cov2'] < 4.):
     count = 0
     model_tag = 0
     while (count <= 7):
@@ -48,7 +48,6 @@ while (crates['fc1'] < 4.):
 
         # after pruning
         # train weights based on the pruned model
-        model_tag = model_tag + 1
         # Train
         param = [
         ('-m',model_tag),
@@ -66,7 +65,7 @@ while (crates['fc1'] < 4.):
         print('acc summary is {}'.format(acc_list))
     # save the model
     model_tag = compute_file_name(crates)
-    crates['fc1'] += 1.
+    crates['cov2'] += 1.
     param = [
     ('-m',model_tag),
     ('-learning_rate',learning_rate),
