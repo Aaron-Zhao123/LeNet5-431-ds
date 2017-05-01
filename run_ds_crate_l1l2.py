@@ -1,6 +1,6 @@
 import os
 import sys
-import training_ds_crate
+import training_ds_crate_l1l2
 from shutil import copyfile
 
 def compute_file_name(p):
@@ -29,7 +29,7 @@ crates = {
 }
 parent_dir = 'assetsl1l2/'
 
-while (crates['cov2'] < 3.):
+while (crates['fc1'] < 4.):
     count = 0
     model_tag = 0
     while (count <= 7):
@@ -69,8 +69,7 @@ while (crates['cov2'] < 3.):
         print('acc summary is {}'.format(acc_list))
     # save the model
     model_tag = compute_file_name(crates)
-    crates['cov2'] += .1
-    # crates['fc1'] += .2
+    crates['fc1'] += 1.
     param = [
     ('-m',model_tag),
     ('-learning_rate',learning_rate),
