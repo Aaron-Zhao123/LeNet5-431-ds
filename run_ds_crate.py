@@ -13,16 +13,23 @@ retrain_cnt = 0
 learning_rate = 1e-4
 model_tag = 0
 count = 0
+# crates = {
+#     'cov1': 0.1,
+#     'cov2': 1.8,
+#     'fc1': 3.38,
+#     'fc2': 0.1
+# }
+
 crates = {
-    'cov1': 0.1,
-    'cov2': 1.8,
-    'fc1': 3.38,
-    'fc2': 0.1
+    'cov1': 0.,
+    'cov2': 0.,
+    'fc1': 0.,
+    'fc2': 0.
 }
 
 prev_parent_dir = './assets/' + 'cr' + 'cov1v' + str(int(crates['cov1']*10))+ 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100))  + 'fc2v' + str(int(crates['fc2']*10)) + '/'
-
-while (crates['fc2'] < 2.):
+crates['fc1'] += 1.
+while (crates['fc1'] < 4.):
     # parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
     parent_dir = './assets/' + 'cr' + 'cov1v' + str(int(crates['cov1']*10))+ 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100))  + 'fc2v' + str(int(crates['fc2']*10)) + '/'
 
@@ -84,6 +91,6 @@ while (crates['fc2'] < 2.):
     # prev_parent_dir = './assets/' + 'crfc1v' + str(int(crates['fc1']*100)) + '/'
     # prev_parent_dir = './assets/' + 'cr' + 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100)) + '/'
     prev_parent_dir = './assets/' + 'cr' + 'cov1v' + str(int(crates['cov1']*10))+ 'cov2v' + str(int(crates['cov2']*10)) + 'fc1v' + str(int(crates['fc1']*100))  + 'fc2v' + str(int(crates['fc2']*10)) + '/'
-    # crates['fc1'] += 0.01
-    crates['cov1'] += 0.1
-    crates['fc2'] += 0.2
+    crates['fc1'] += 1.
+    # crates['cov1'] += 0.1
+    # crates['fc2'] += 0.2
