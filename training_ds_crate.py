@@ -296,11 +296,6 @@ def main(argv = None):
         except getopt.error, msg:
             raise Usage(msg)
 
-        # obtain all weight masks
-        pruning_cov = int(pruning_cov)
-        pruning_cov2 = int(pruning_cov2)
-        pruning_fc = float(pruning_fc)
-        pruning_fc2 = int(pruning_fc2)
         file_name_part = compute_file_name(crate)
         if (SAVE):
             mask_file = parent_dir +  'mask_crate'+ model_number +'.pkl'
