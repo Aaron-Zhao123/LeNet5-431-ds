@@ -65,8 +65,8 @@ while (crates['fc1'] < 4.):
             break
         print('acc summary is {}'.format(acc_list))
     # save the model
-    crates['fc1'] += 1.
     model_tag = compute_file_name(crates)
+    crates['fc1'] += 1.
     param = [
     ('-m',model_tag),
     ('-learning_rate',learning_rate),
