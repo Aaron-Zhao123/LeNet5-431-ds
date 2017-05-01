@@ -64,5 +64,18 @@ while (crates['fc1'] < 4.):
             print('acc passed...')
             break
         print('acc summary is {}'.format(acc_list))
-    acc_list.append((acc,crates['fc1']))
+    # save the model
     crates['fc1'] += 1.
+    model_tag = compute_file_name(crates)
+    param = [
+    ('-m',model_tag),
+    ('-learning_rate',learning_rate),
+    ('-prune', False),
+    ('-train', False),
+    ('-save', True),
+    ('-parent_dir', parent_dir),
+    ('-iter_cnt', count),
+    ('-crate',crates)
+    ]
+    _ = training_ds_crate.main(param)
+    acc_list.append((acc,crates['fc1']))
