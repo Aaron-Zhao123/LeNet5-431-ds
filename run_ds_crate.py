@@ -27,6 +27,7 @@ crates = {
     'fc1': 0.,
     'fc2': 0.
 }
+parent_dir = 'assets/'
 
 while (crates['fc1'] < 4.):
     count = 0
