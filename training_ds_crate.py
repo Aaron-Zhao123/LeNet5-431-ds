@@ -416,11 +416,11 @@ def main(argv = None):
                                     keep_prob: 1.})
                             prune_info(weights_new,0)
                             print('test accuracy is {}'.format(test_accuracy))
-                            print('crates are: {}'.format(crates))
+                            print('crates are: {}'.format(crate))
                             if (epoch % 300 == 0):
                                 learning_rate = learning_rate / float(10)
                             if (test_accuracy > 0.9936 or epoch > 300):
-                                file_name_part = compute_file_name(crates)
+                                file_name_part = compute_file_name(crate)
                                 file_name = parent_dir + 'weight_crate' + file_name_part + '.pkl'
                                 with open(file_name, 'wb') as f:
                                     pickle.dump((
