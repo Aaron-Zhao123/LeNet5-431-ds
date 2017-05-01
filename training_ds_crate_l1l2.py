@@ -304,7 +304,7 @@ def main(argv = None):
                     SAVE = val
                 if (opt == '-lambda_1'):
                     lambda_1 = val
-                if (opt == 'lambda_2'):
+                if (opt == '-lambda_2'):
                     lambda_2 = val
             print('Train values:',TRAIN)
         except getopt.error, msg:
