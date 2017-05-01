@@ -24,12 +24,12 @@ count = 0
 crates = {
     'cov1': 0.,
     'cov2': 0.,
-    'fc1': 0.,
+    'fc1': 4.,
     'fc2': 0.
 }
 parent_dir = 'assetsl1l2/'
 
-while (crates['fc1'] < 4.):
+while (crates['fc1'] < 6.):
     count = 0
     model_tag = 0
     while (count <= 7):
