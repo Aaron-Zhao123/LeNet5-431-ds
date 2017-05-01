@@ -447,6 +447,25 @@ def main(argv = None):
                 if (PRUNE_ONLY == True):
                     mask_info(weights_mask)
                     prune_weights(weights, biases, weights_mask, crate, iter_cnt, parent_dir)
+                if (SAVE == True):
+                    file_name_part = compute_file_name(crate)
+                    mask_file_name = parent_dir+'mask_crate'+ file_name_part+'.pkl'
+                    file_name = parent_dir+'weight_crate'+ file_name_part+'.pkl'
+                    print("saving for next iteration's computation"  + mask_file_name)
+                    with open(mask_file_name, 'wb') as f:
+                        pickle.dump(weights_mask, f)
+                    mask_info(weights_mask)
+                    with open(file_name, 'wb') as f:
+                        pickle.dump((
+                            weights['cov1'].eval(),
+                            weights['cov2'].eval(),
+                            weights['fc1'].eval(),
+                            weights['fc2'].eval(),
+                            biases['cov1'].eval(),
+                            biases['cov2'].eval(),
+                            biases['fc1'].eval(),
+                            biases['fc2'].eval()),f)
+
                 # Calculate accuracy
                 batch_size = 128
                 total_batch = int(mnist.test.num_examples/batch_size)
@@ -461,24 +480,6 @@ def main(argv = None):
                 with open('acc_log_10.txt','a') as f:
                     f.write(str(test_accuracy)+'\n')
                 return (np.mean(acc_list))
-            if (SAVE == True):
-                file_name_part = compute_file_name(crate)
-                mask_file_name = parent_dir+'mask_crate'+ file_name_part+'.pkl'
-                file_name = parent_dir+'weight_crate'+ file_name_part+'.pkl'
-                print("saving for next iteration's computation"  + mask_file_name)
-                with open(mask_file_name, 'wb') as f:
-                    pickle.dump(weights_mask, f)
-                mask_info(weights_mask)
-                with open(file_name, 'wb') as f:
-                    pickle.dump((
-                        weights['cov1'].eval(),
-                        weights['cov2'].eval(),
-                        weights['fc1'].eval(),
-                        weights['fc2'].eval(),
-                        biases['cov1'].eval(),
-                        biases['cov2'].eval(),
-                        biases['fc1'].eval(),
-                        biases['fc2'].eval()),f)
 
     except Usage, err:
         print >> sys.stderr, err.msg
