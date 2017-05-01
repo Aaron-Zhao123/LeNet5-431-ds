@@ -44,12 +44,17 @@ prune_threshold_fc = 1
 prune_freq = 100
 ENABLE_PRUNING = 0
 
+def compute_file_name(p):
+    name = ''
+    name += 'cov' + str(int(p['cov1'] * 10))
+    name += 'cov' + str(int(p['cov2'] * 10))
+    name += 'fc' + str(int(p['fc1'] * 10))
+    name += 'fc' + str(int(p['fc2'] * 10))
+    return name
 
 # Store layers weight & bias
-# def initialize_tf_variables(first_time_training):
-#     if (first_time_training):
 def initialize_variables(parent_dir, model_number):
-    with open(parent_dir + 'weight_crate' + str(model_number) +'.pkl','rb') as f:
+    with open(parent_dir + 'weight_crate' + model_number +'.pkl','rb') as f:
         wc1, wc2, wd1, out, bc1, bc2, bd1, bout = pickle.load(f)
     weights = {
         # 5x5 conv, 1 input, 32 outputs
@@ -160,24 +165,13 @@ def prune_weights(weights, biases, org_masks, cRates, iter_cnt, parent_dir):
         # elements at this postion becomes ones
         mask_on = np.abs(w_eval) > threshold_on
         new_mask[key] = np.logical_or(((1 - mask_off) * org_masks[key]),mask_on).astype(int)
-    mask_file_name = parent_dir+'mask_crate'+ str(iter_cnt)+'.pkl'
-    file_name = parent_dir+'weight_crate'+ str(iter_cnt)+'.pkl'
+    file_name_part = compute_file_name(cRates)
+    mask_file_name = parent_dir+'mask_crate'+ file_name_part+'.pkl'
+    file_name = parent_dir+'weight_crate'+ file_name_part+'.pkl'
     print("training done, save a mask file at "  + mask_file_name)
     with open(mask_file_name, 'wb') as f:
         pickle.dump(new_mask, f)
     mask_info(new_mask)
-    with open(file_name, 'wb') as f:
-        pickle.dump((
-            weights['cov1'].eval(),
-            weights['cov2'].eval(),
-            weights['fc1'].eval(),
-            weights['fc2'].eval(),
-            biases['cov1'].eval(),
-            biases['cov2'].eval(),
-            biases['fc1'].eval(),
-            biases['fc2'].eval()),f)
-
-    file_name = 'weight_crate'+ str(iter_cnt)+'.pkl'
     print("Pruning done, dorp weights to {}".format(file_name))
     with open(file_name, 'wb') as f:
         pickle.dump((
@@ -275,18 +269,11 @@ def main(argv = None):
             }
             PRUNE_ONLY = False
             TRAIN = False
+            SAVE = False
             for item in opts:
                 print (item)
                 opt = item[0]
                 val = item[1]
-                if (opt == '-pcov'):
-                    pruning_cov = val
-                if (opt == '-pcov2'):
-                    pruning_cov2 = val
-                if (opt == '-pfc'):
-                    pruning_fc = val
-                if (opt == '-pfc2'):
-                    pruning_fc2 = val
                 if (opt == '-m'):
                     model_number = val
                 if (opt == '-learning_rate'):
@@ -303,6 +290,8 @@ def main(argv = None):
                     crate = val
                 if (opt == '-iter_cnt'):
                     iter_cnt = val
+                if (opt == '-next_iter_save'):
+                    SAVE = val
             print('pruning percentage for cov and fc are {},{}'.format(pruning_cov, pruning_fc))
             print('Train values:',TRAIN)
         except getopt.error, msg:
@@ -313,9 +302,13 @@ def main(argv = None):
         pruning_cov2 = int(pruning_cov2)
         pruning_fc = float(pruning_fc)
         pruning_fc2 = int(pruning_fc2)
-        mask_file = parent_dir +  'mask_crate'+ str(iter_cnt) +'.pkl'
+        file_name_part = compute_file_name(crate)
+        if (SAVE):
+            mask_file = parent_dir +  'mask_crate'+ model_number +'.pkl'
+        else:
+            mask_file = parent_dir +  'mask_crate'+ file_name_part +'.pkl'
 
-        if (TRAIN == True):
+        if (TRAIN == True or SAVE == True):
             with open(mask_file,'rb') as f:
                 weights_mask = pickle.load(f)
         else:
@@ -343,7 +336,12 @@ def main(argv = None):
 
         x_image = tf.reshape(x,[-1,28,28,1])
         # model number is iter_cnt - 1
-        (weights, biases) = initialize_variables(parent_dir, model_number)
+        if (SAVE):
+            init_file_part = model_number
+        else:
+            init_file_part = file_name_part
+
+        (weights, biases) = initialize_variables(parent_dir, init_file_part)
         weights_new = {}
         for key in keys:
             weights_new[key] = weights[key] * tf.constant(weights_mask[key], dtype=tf.float32)
@@ -377,17 +375,7 @@ def main(argv = None):
 
             keys = ['cov1','cov2','fc1','fc2']
 
-            # retain the masks on the weights
-            # only weights are masked
-            # for key in keys:
-            #     sess.run(weights[key].assign(weights[key].eval()*weights_mask[key]))
-                # sess.run(biases[key].assign(biases[key].eval()*biases_mask[key]))
-
-
             prune_info(weights,1)
-            # exit()
-            # plot_weights(weights, 'before_training'+ str(pruning_number))
-            # Training cycle
             training_cnt = 0
             pruning_cnt = 0
             train_accuracy = 0
@@ -434,12 +422,12 @@ def main(argv = None):
                                     keep_prob: 1.})
                             prune_info(weights_new,0)
                             print('test accuracy is {}'.format(test_accuracy))
-                            print(pruning_cov,pruning_cov2,pruning_fc,pruning_fc2)
+                            print('crates are: {}'.format(crates))
                             if (epoch % 300 == 0):
                                 learning_rate = learning_rate / float(10)
                             if (test_accuracy > 0.9936 or epoch > 300):
-                                # file_name = parent_dir + 'weights_log/'+ 'weight_crate' + str(iter_cnt) + '.pkl'
-                                file_name = parent_dir + 'weight_crate' + str(iter_cnt) + '.pkl'
+                                file_name_part = compute_file_name(crates)
+                                file_name = parent_dir + 'weight_crate' + file_name_part + '.pkl'
                                 with open(file_name, 'wb') as f:
                                     pickle.dump((
                                         weights['cov1'].eval(),
@@ -479,6 +467,25 @@ def main(argv = None):
                 with open('acc_log_10.txt','a') as f:
                     f.write(str(test_accuracy)+'\n')
                 return (np.mean(acc_list))
+            if (SAVE == True):
+                file_name_part = compute_file_name(crate)
+                mask_file_name = parent_dir+'mask_crate'+ file_name_part+'.pkl'
+                file_name = parent_dir+'weight_crate'+ file_name_part+'.pkl'
+                print("saving for next iteration's computation"  + mask_file_name)
+                with open(mask_file_name, 'wb') as f:
+                    pickle.dump(weights_mask, f)
+                mask_info(weights_mask)
+                with open(file_name, 'wb') as f:
+                    pickle.dump((
+                        weights['cov1'].eval(),
+                        weights['cov2'].eval(),
+                        weights['fc1'].eval(),
+                        weights['fc2'].eval(),
+                        biases['cov1'].eval(),
+                        biases['cov2'].eval(),
+                        biases['fc1'].eval(),
+                        biases['fc2'].eval()),f)
+
     except Usage, err:
         print >> sys.stderr, err.msg
         print >> sys.stderr, "for help use --help"
