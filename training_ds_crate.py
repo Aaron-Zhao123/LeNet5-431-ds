@@ -292,7 +292,6 @@ def main(argv = None):
                     iter_cnt = val
                 if (opt == '-next_iter_save'):
                     SAVE = val
-            print('pruning percentage for cov and fc are {},{}'.format(pruning_cov, pruning_fc))
             print('Train values:',TRAIN)
         except getopt.error, msg:
             raise Usage(msg)
