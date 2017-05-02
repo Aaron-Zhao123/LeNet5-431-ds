@@ -23,7 +23,7 @@ model_tag = 0
 count = 0
 crates = {
     'cov1': 0.,
-    'cov2': 0.,
+    'cov2': 1.8,
     'fc1': 4.,
     'fc2': 0.
 }
