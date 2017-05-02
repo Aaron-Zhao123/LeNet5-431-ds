@@ -28,6 +28,8 @@ crates = {
     'fc2': 0.
 }
 parent_dir = 'assetsl1l2/'
+l1 = 1e-7
+l2 = 1e-5
 
 while (crates['fc1'] < 6.):
     count = 0
@@ -43,8 +45,8 @@ while (crates['fc1'] < 6.):
         ('-parent_dir', parent_dir),
         ('-iter_cnt', count),
         ('-crate',crates),
-        ('-lambda_1', 1e-7),
-        ('-lambda_2', 1e-4)
+        ('-lambda_1', l1),
+        ('-lambda_2', l2)
         ]
         _ = training_ds_crate_l1l2.main(param)
 
@@ -59,8 +61,8 @@ while (crates['fc1'] < 6.):
         ('-parent_dir', parent_dir),
         ('-iter_cnt', count),
         ('-crate',crates),
-        ('-lambda_1', 1e-7),
-        ('-lambda_2', 1e-4)
+        ('-lambda_1', l1),
+        ('-lambda_2', l2)
         ]
         acc = training_ds_crate_l1l2.main(param)
         if (acc > 0.9936):
@@ -79,8 +81,8 @@ while (crates['fc1'] < 6.):
     ('-parent_dir', parent_dir),
     ('-iter_cnt', count),
     ('-crate',crates),
-    ('-lambda_1', 1e-7),
-    ('-lambda_2', 1e-4)
+    ('-lambda_1', l1),
+    ('-lambda_2', l2)
     ]
     _ = training_ds_crate_l1l2.main(param)
     acc_list.append((acc,crates['fc1']))
