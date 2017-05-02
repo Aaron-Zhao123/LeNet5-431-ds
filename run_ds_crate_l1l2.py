@@ -24,14 +24,14 @@ count = 0
 crates = {
     'cov1': 0.,
     'cov2': 1.,
-    'fc1': 5.,
+    'fc1': 4.,
     'fc2': 0.
 }
 parent_dir = 'assetsl1l2/'
 l1 = 1e-7
 l2 = 1e-4
 
-while (crates['cov2'] < 4.):
+while (crates['cov2'] < 2.):
     count = 0
     model_tag = 0
     while (count <= 7):
