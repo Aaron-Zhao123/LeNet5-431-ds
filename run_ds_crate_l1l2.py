@@ -28,8 +28,8 @@ crates = {
     'fc2': 0.
 }
 parent_dir = 'assetsl1l2/'
-l1 = 1e-8
-l2 = 1e-5
+l1 = 1e-7
+l2 = 1e-4
 
 while (crates['fc1'] < 6.):
     count = 0
