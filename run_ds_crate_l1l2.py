@@ -23,7 +23,7 @@ model_tag = 0
 count = 0
 crates = {
     'cov1': 0.,
-    'cov2': 0.,
+    'cov2': 1.,
     'fc1': 5.,
     'fc2': 0.
 }
@@ -71,7 +71,7 @@ while (crates['cov2'] < 4.):
         print('acc summary is {}'.format(acc_list))
     # save the model
     model_tag = compute_file_name(crates)
-    crates['cov2'] += .5
+    crates['cov2'] += .2
     param = [
     ('-m',model_tag),
     ('-learning_rate',learning_rate),
