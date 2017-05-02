@@ -24,7 +24,7 @@ count = 0
 crates = {
     'cov1': 0.,
     'cov2': 0.,
-    'fc1': 4.,
+    'fc1': 0.,
     'fc2': 0.
 }
 parent_dir = 'assetsl1l2/'
@@ -69,7 +69,7 @@ while (crates['fc1'] < 6.):
         print('acc summary is {}'.format(acc_list))
     # save the model
     model_tag = compute_file_name(crates)
-    crates['fc1'] += 1.
+    crates['fc1'] += .5
     param = [
     ('-m',model_tag),
     ('-learning_rate',learning_rate),
