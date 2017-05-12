@@ -27,7 +27,7 @@ crates = {
     'fc1': 0.,
     'fc2': 0.
 }
-parent_dir = 'assets/'
+parent_dir = 'assets_no_retrain/'
 
 while (crates['fc1'] < 3.):
     count = 0
