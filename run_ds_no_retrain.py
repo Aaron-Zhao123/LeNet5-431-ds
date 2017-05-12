@@ -66,9 +66,9 @@ while (crates['fc1'] < 3.):
 
     # save the model
     model_tag = compute_file_name(crates)
-    # crates['cov2'] += .1
-    crates['cov1'] += .2
-    crates['fc2'] += .2
+    crates['fc1'] += 1.
+    # crates['cov1'] += .2
+    # crates['fc2'] += .2
     param = [
     ('-m',model_tag),
     ('-learning_rate',learning_rate),
