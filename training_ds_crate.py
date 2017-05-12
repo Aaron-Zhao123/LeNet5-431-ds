@@ -405,7 +405,7 @@ def main(argv = None):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
                                 prune_info(weights_new,0)
-                        if (accuracy_mean > 0.99 or epoch > 300):
+                        if (accuracy_mean > 0.99 or epoch > 1):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
                             print('Training ends')
@@ -419,7 +419,7 @@ def main(argv = None):
                             print('crates are: {}'.format(crate))
                             if (epoch % 300 == 0):
                                 learning_rate = learning_rate / float(10)
-                            if (test_accuracy > 0.9936 or epoch > 300):
+                            if (test_accuracy > 0.9936 or epoch > 1):
                                 file_name_part = compute_file_name(crate)
                                 file_name = parent_dir + 'weight_crate' + file_name_part + '.pkl'
                                 with open(file_name, 'wb') as f:
