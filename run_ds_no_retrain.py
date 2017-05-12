@@ -29,7 +29,7 @@ crates = {
 }
 parent_dir = 'assets_no_retrain/'
 
-while (crates['fc1'] < 3.):
+while (crates['fc1'] < 2.):
     count = 0
     model_tag = 0
 
@@ -64,8 +64,9 @@ while (crates['fc1'] < 3.):
     # save the model
     model_tag = compute_file_name(crates)
     crates['fc1'] += .5
-    # crates['cov1'] += .2
-    # crates['fc2'] += .2
+    crates['fc2'] += .5
+    crates['cov1'] += .5
+    crates['cov2'] += .5
     param = [
     ('-m',model_tag),
     ('-learning_rate',learning_rate),
