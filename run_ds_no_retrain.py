@@ -59,14 +59,11 @@ while (crates['fc1'] < 3.):
     ('-crate',crates)
     ]
     acc = training_ds_crate.main(param)
-    # if (acc > 0.9936):
-    #     print('acc passed...')
-    #     break
     print('acc summary is {}'.format(acc_list))
 
     # save the model
     model_tag = compute_file_name(crates)
-    crates['fc1'] += 1.
+    crates['fc1'] += .5
     # crates['cov1'] += .2
     # crates['fc2'] += .2
     param = [
@@ -80,4 +77,4 @@ while (crates['fc1'] < 3.):
     ('-crate',crates)
     ]
     _ = training_ds_crate.main(param)
-    acc_list.append((acc,crates['fc1']))
+    acc_list.append((acc[:],crates['fc1'][:]))
