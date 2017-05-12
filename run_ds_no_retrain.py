@@ -77,4 +77,4 @@ while (crates['fc1'] < 3.):
     ('-crate',crates)
     ]
     _ = training_ds_crate.main(param)
-    acc_list.append((acc[:],crates['fc1'][:]))
+    acc_list.append((acc,crates['fc1']))
