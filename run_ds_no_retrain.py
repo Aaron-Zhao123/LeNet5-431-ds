@@ -59,9 +59,9 @@ while (crates['fc1'] < 3.):
     ('-crate',crates)
     ]
     acc = training_ds_crate.main(param)
-    if (acc > 0.9936):
-        print('acc passed...')
-        break
+    # if (acc > 0.9936):
+    #     print('acc passed...')
+    #     break
     print('acc summary is {}'.format(acc_list))
 
     # save the model
