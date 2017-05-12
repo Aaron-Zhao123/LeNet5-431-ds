@@ -53,7 +53,7 @@ while (crates['fc1'] < 2.):
     ('-m',model_tag),
     ('-learning_rate',learning_rate),
     ('-prune', False),
-    ('-train', False),
+    ('-train', True),
     ('-parent_dir', parent_dir),
     ('-iter_cnt', count),
     ('-crate',crates)
