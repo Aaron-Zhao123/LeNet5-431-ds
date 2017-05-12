@@ -29,7 +29,7 @@ crates = {
 }
 parent_dir = 'assets_no_retrain/'
 
-while (crates['fc1'] < 2.):
+while (crates['fc1'] < 3.):
     count = 0
     model_tag = 0
 
@@ -59,7 +59,6 @@ while (crates['fc1'] < 2.):
     ('-crate',crates)
     ]
     acc = training_ds_crate.main(param)
-    print('acc summary is {}'.format(acc_list))
 
     # save the model
     model_tag = compute_file_name(crates)
@@ -79,3 +78,5 @@ while (crates['fc1'] < 2.):
     ]
     _ = training_ds_crate.main(param)
     acc_list.append((acc,crates['fc1']))
+
+    print('acc summary is {}'.format(acc_list))
