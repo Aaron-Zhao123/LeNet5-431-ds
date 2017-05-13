@@ -29,7 +29,7 @@ crates = {
 }
 parent_dir = 'assets_no_retrain/'
 
-while (crates['fc1'] < 3.):
+while (crates['fc1'] < 5.):
     count = 0
     model_tag = 0
 
