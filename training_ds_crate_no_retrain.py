@@ -378,6 +378,7 @@ def main(argv = None):
             c = 0
             train_accuracy = 0
             batch_size = 128
+            training_epochs = 0
             if (TRAIN == True):
                 print('Training starts ...')
                 for epoch in range(training_epochs):
