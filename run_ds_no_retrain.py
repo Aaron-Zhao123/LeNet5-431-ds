@@ -58,7 +58,7 @@ while (crates['fc1'] < 3.):
     ('-iter_cnt', count),
     ('-crate',crates)
     ]
-    (acc,prune_perc) = training_ds_crate_no_retrain.main(param)
+    acc,prune_perc = training_ds_crate_no_retrain.main(param)
 
     # save the model
     model_tag = compute_file_name(crates)
