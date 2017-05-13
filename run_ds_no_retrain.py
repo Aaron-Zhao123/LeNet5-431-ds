@@ -58,7 +58,7 @@ while (crates['fc1'] < 3.):
     ('-iter_cnt', count),
     ('-crate',crates)
     ]
-    acc = training_ds_crate.main(param)
+    (acc,prune_perc) = training_ds_crate.main(param)
 
     # save the model
     model_tag = compute_file_name(crates)
@@ -77,6 +77,6 @@ while (crates['fc1'] < 3.):
     ('-crate',crates)
     ]
     _ = training_ds_crate.main(param)
-    acc_list.append((acc,crates['fc1']))
+    acc_list.append((acc,prune_perc))
 
     print('acc summary is {}'.format(acc_list))
