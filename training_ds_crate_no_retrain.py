@@ -433,7 +433,7 @@ def main(argv = None):
                                         biases['fc1'].eval(),
                                         biases['fc2'].eval()),f)
                                 mask_info(weights_mask)
-                                return test_accuracy
+                                return (test_accuracy,0)
                             else:
                                 pass
                         # Compute average loss
