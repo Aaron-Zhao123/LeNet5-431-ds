@@ -526,6 +526,7 @@ def prune_info(weights, biases, counting):
         perc = 0
     else:
         perc = t_non_zeros / float(t_total)
+    print("non zeros {}, total {}".format(t_non_zeros, t_total))
     return perc
 
 def mask_info(weights):
