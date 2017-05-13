@@ -1,6 +1,6 @@
 import os
 import sys
-import training_ds_crate
+import training_ds_crate_no_retrain
 from shutil import copyfile
 
 def compute_file_name(p):
@@ -44,7 +44,7 @@ while (crates['fc1'] < 3.):
     ('-iter_cnt', count),
     ('-crate',crates)
     ]
-    _ = training_ds_crate.main(param)
+    _ = training_ds_crate_no_retrain.main(param)
 
     # after pruning
     # train weights based on the pruned model
@@ -58,7 +58,7 @@ while (crates['fc1'] < 3.):
     ('-iter_cnt', count),
     ('-crate',crates)
     ]
-    (acc,prune_perc) = training_ds_crate.main(param)
+    (acc,prune_perc) = training_ds_crate_no_retrain.main(param)
 
     # save the model
     model_tag = compute_file_name(crates)
@@ -76,7 +76,7 @@ while (crates['fc1'] < 3.):
     ('-iter_cnt', count),
     ('-crate',crates)
     ]
-    _ = training_ds_crate.main(param)
+    _ = training_ds_crate_no_retrain.main(param)
     acc_list.append((acc,prune_perc))
 
     print('acc summary is {}'.format(acc_list))
