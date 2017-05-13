@@ -438,7 +438,16 @@ def main(argv = None):
                             else:
                                 pass
                         # Compute average loss
-                        avg_cost += c / total_batch
+                    for i in range(total_batch):
+                        batch_x, batch_y = mnist.test.next_batch(batch_size)
+                        accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+                        test_accuracy = accuracy.eval({x: batch_x, y: batch_y, keep_prob : 1.0})
+                        acc_list.append(test_accuracy)
+                    print("Accuracy:", np.mean(acc_list))
+                    with open('acc_log_10.txt','a') as f:
+                        f.write(str(test_accuracy)+'\n')
+                    prune_perc = prune_info(weights_new, biases, 0)
+                    return (np.mean(acc_list), prune_perc
                     # Display logs per epoch step
                     print("Epoch:", '%04d' % (epoch+1), "cost=", "{:.9f}".format(avg_cost))
                 print("Optimization Finished!")
