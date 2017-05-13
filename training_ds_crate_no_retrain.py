@@ -440,6 +440,9 @@ def main(argv = None):
                         # Compute average loss
                     print("Epoch:", '%04d' % (epoch+1), "cost=", "{:.9f}".format(avg_cost))
                 print("Optimization Finished!")
+                batch_size = 128
+                total_batch = int(mnist.test.num_examples/batch_size)
+                acc_list = []
                 for i in range(total_batch):
                     batch_x, batch_y = mnist.test.next_batch(batch_size)
                     accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
