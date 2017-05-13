@@ -404,7 +404,7 @@ def main(argv = None):
                             if (training_cnt % 1000 == 0):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
-                                _ = prune_info(weights_new, biases, 0)
+                                perc = prune_info(weights_new, biases, 0)
                         if (accuracy_mean > 0.99 or epoch > 1):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
@@ -414,7 +414,7 @@ def main(argv = None):
                                     y: mnist.test.labels[:],
                                     lr: learning_rate,
                                     keep_prob: 1.})
-                            _ = prune_info(weights_new, biases, 0)
+                            perc = prune_info(weights_new, biases, 0)
                             print('test accuracy is {}'.format(test_accuracy))
                             print('crates are: {}'.format(crate))
                             if (epoch % 300 == 0):
@@ -433,7 +433,7 @@ def main(argv = None):
                                         biases['fc1'].eval(),
                                         biases['fc2'].eval()),f)
                                 mask_info(weights_mask)
-                                return (test_accuracy,0)
+                                return (test_accuracy, perc)
                             else:
                                 pass
                         # Compute average loss
