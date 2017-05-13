@@ -61,8 +61,8 @@ while (crates['fc1'] < 3.):
     acc,prune_perc = training_ds_crate_no_retrain.main(param)
 
     print("pruning perc is {}".format(prune_perc))
-    if (crates['fc1'] > 0):
-        sys.exit()
+    # if (crates['fc1'] > 0):
+    #     sys.exit()
     # save the model
     model_tag = compute_file_name(crates)
     crates['fc1'] += .5
