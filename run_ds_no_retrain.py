@@ -65,10 +65,10 @@ while (crates['fc1'] < 5.):
     #     sys.exit()
     # save the model
     model_tag = compute_file_name(crates)
-    crates['fc1'] += .5
-    crates['fc2'] += .5
-    crates['cov1'] += .5
-    crates['cov2'] += .5
+    crates['fc1'] += .2
+    crates['fc2'] += .2
+    crates['cov1'] += .2
+    crates['cov2'] += .2
     param = [
     ('-m',model_tag),
     ('-learning_rate',learning_rate),
