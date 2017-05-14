@@ -19,7 +19,7 @@ class Usage(Exception):
 
 # Parameters
 learning_rate = 1e-4
-training_epochs = 310
+training_epochs = 12
 batch_size = 128
 display_step = 1
 
@@ -406,7 +406,7 @@ def main(argv = None):
                                 print('accuracy mean is {}'.format(accuracy_mean))
                                 print('Epoch is {}'.format(epoch))
                                 perc = prune_info(weights_new, biases, 0)
-                        if (accuracy_mean > 0.99 or epoch > 1):
+                        if (accuracy_mean > 0.99 or epoch > 10):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
                             print('Training ends')
@@ -420,7 +420,7 @@ def main(argv = None):
                             print('crates are: {}'.format(crate))
                             if (epoch % 300 == 0):
                                 learning_rate = learning_rate / float(10)
-                            if (test_accuracy > 0.9936 or epoch > 1):
+                            if (test_accuracy > 0.9936 or epoch > 10):
                                 file_name_part = compute_file_name(crate)
                                 file_name = parent_dir + 'weight_crate' + file_name_part + '.pkl'
                                 with open(file_name, 'wb') as f:
