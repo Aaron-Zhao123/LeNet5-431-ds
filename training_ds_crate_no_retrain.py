@@ -402,10 +402,9 @@ def main(argv = None):
                                 keep_prob: 1.})
                             accuracy_list = np.concatenate((np.array([train_accuracy]),accuracy_list[0:29]))
                             accuracy_mean = np.mean(accuracy_list)
-                            if (training_cnt % 1000 == 0):
-                                print('accuracy mean is {}'.format(accuracy_mean))
-                                print('Epoch is {}'.format(epoch))
-                                perc = prune_info(weights_new, biases, 0)
+                            print('accuracy mean is {}'.format(accuracy_mean))
+                            print('Epoch is {}'.format(epoch))
+                            perc = prune_info(weights_new, biases, 0)
                         if (accuracy_mean > 0.99 or epoch > 10):
                             accuracy_list = np.zeros(30)
                             accuracy_mean = 0
